@@ -13,7 +13,7 @@ int main() {
 
 	Map map(mapResolution, robotSize);
 	map.loadMap("roboticLabMap.png");
-
+	cout << "Hello, I am NoamTron.";
 	return 0;
 }
 
