@@ -7,21 +7,18 @@ CPP_SRCS += \
 ../Graph.cpp \
 ../Main.cpp \
 ../Map.cpp \
-../Node.cpp \
 ../lodepng.cpp 
 
 OBJS += \
 ./Graph.o \
 ./Main.o \
 ./Map.o \
-./Node.o \
 ./lodepng.o 
 
 CPP_DEPS += \
 ./Graph.d \
 ./Main.d \
 ./Map.d \
-./Node.d \
 ./lodepng.d 
 
 

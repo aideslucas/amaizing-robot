@@ -15,7 +15,8 @@ int main() {
 	map.loadMap("roboticLabMap.png");
 
 
-
+	map.inflateObstacles();
+	map.saveMap("infloatedMap.png");
 	return 0;
 }
 

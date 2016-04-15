@@ -8,12 +8,11 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#include "Node.h"
+
 #include "Map.h"
 
 class Graph {
 private:
-	vector<vector<Node *> > nodes;
 
 public:
 	Graph();

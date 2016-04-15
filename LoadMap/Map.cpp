@@ -33,6 +33,19 @@ void Map::loadMap(const char* mapFile) {
 	printMap();
 }
 
+void Map::saveMap(const char* mapFile) {
+
+	inflotedPixels.resize(width * height * 4);
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			setInflotedCellIsOccupied(i, j);
+		}
+	}
+
+	lodepng::encode(mapFile, inflotedPixels, width, height);
+}
+
 void Map::inflateObstacles() {
 	int robotSizeInPixels = robotSize / mapResolution;
 	int inflationRadius = 0.5 * robotSizeInPixels;
@@ -46,11 +59,13 @@ void Map::inflateObstacles() {
 		for (int j = 0; j < width; j++) {
 			if (map[i][j])
 			{
-				for (int ii = -inflationRadius; ii <= inflationRadius; ii++) {
-					for (int jj = -inflationRadius; jj <= inflationRadius; jj++) {
-						if (i + ii > 0 && i + ii < height && j + jj > 0 && j + jj < width)
+				for (int k = -1 * inflationRadius; k <= inflationRadius; k++)
+				{
+					for (int m = -1 * inflationRadius; m <= inflationRadius; m++)
+					{
+						if (i + k > 0 && i + k < height && j + m > 0 && j + m < width)
 						{
-							inflotedMap[i + ii][j + jj] = true;
+							inflotedMap[i + k][j + m] = true;
 						}
 					}
 				}
@@ -71,6 +86,17 @@ bool Map::checkIfCellIsOccupied(int i, int j) {
 		return true;
 	return false;
 }
+
+void Map::setInflotedCellIsOccupied(int i, int j) {
+	int c = (i * width + j) * 4;
+	int color = (inflotedMap[i][j] ? 0 : 255);
+
+	inflotedPixels[c] = color;
+	inflotedPixels[c + 1] = color;
+	inflotedPixels[c + 2] = color;
+	inflotedPixels[c + 3] = 255;
+}
+
 
 void Map::printMap() const {
 

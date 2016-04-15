@@ -18,10 +18,12 @@ private:
 	vector<vector<bool> > map;
 	vector<vector<bool> > inflotedMap;
 	vector<unsigned char> pixels;
+	vector<unsigned char> inflotedPixels;
 	double mapResolution;
 	double robotSize;
 
 	bool checkIfCellIsOccupied(int i, int j);
+	void setInflotedCellIsOccupied(int i, int j);
 	void printMap() const;
 
 	void printInflotedMap() const;
@@ -29,6 +31,7 @@ private:
 public:
 	Map(double mapResolution, double robotSize);
 	void loadMap(const char* mapFile);
+	void saveMap(const char* mapFile);
 	void inflateObstacles();
 	virtual ~Map();
 };
