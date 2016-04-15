@@ -8,7 +8,7 @@
 #include "Map.h"
 
 int main() {
-	double mapResolution = 0.025;
+	double mapResolution = 1;
 	double robotSize = 0.3;
 
 	Map map(mapResolution, robotSize);

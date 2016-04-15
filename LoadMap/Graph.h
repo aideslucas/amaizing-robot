@@ -9,14 +9,15 @@
 #define GRAPH_H_
 
 #include "Node.h"
+#include "Map.h"
 
 class Graph {
 private:
 	vector<vector<Node *> > nodes;
 
 public:
-	void buildGraphFromMap(const Map &map);
 	Graph();
+	void buildGraphFromMap(const Map &map);
 	virtual ~Graph();
 };
 

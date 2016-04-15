@@ -9,9 +9,9 @@
 #include "lodepng.h"
 #include <iostream>
 
-Map::Map() {
-	// TODO Auto-generated constructor stub
-
+Map::Map(double mapResolution, double robotSize) {
+	this->robotSize = robotSize;
+	this->mapResolution = mapResolution;
 }
 
 void Map::loadMap(const char* mapFile) {
@@ -58,6 +58,7 @@ void Map::printMap() const {
 		cout << endl;
 	}
 }
+
 
 Map::~Map() {
 	// TODO Auto-generated destructor stub

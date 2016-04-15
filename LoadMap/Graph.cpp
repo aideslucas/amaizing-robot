@@ -6,9 +6,14 @@
  */
 
 #include "Graph.h"
+#include "Map.h"
 
 Graph::Graph() {
 	// TODO Auto-generated constructor stub
+
+}
+
+void Graph::buildGraphFromMap(const Map &map){
 
 }
 
