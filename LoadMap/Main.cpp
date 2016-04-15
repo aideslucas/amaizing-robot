@@ -8,12 +8,14 @@
 #include "Map.h"
 
 int main() {
-	double mapResolution = 1;
+	double mapResolution = 0.025;
 	double robotSize = 0.3;
 
 	Map map(mapResolution, robotSize);
 	map.loadMap("roboticLabMap.png");
-	cout << "Hello, I am NoamTron.";
+
+
+
 	return 0;
 }
 

@@ -17,6 +17,7 @@ Map::Map(double mapResolution, double robotSize) {
 void Map::loadMap(const char* mapFile) {
 
 	lodepng::decode(pixels, width, height, mapFile);
+
 	map.resize(height);
 	for (int i = 0; i < height; i++) {
 		map[i].resize(width);
@@ -34,9 +35,30 @@ void Map::loadMap(const char* mapFile) {
 
 void Map::inflateObstacles() {
 	int robotSizeInPixels = robotSize / mapResolution;
-	int inflationRadius = 0.3 * robotSizeInPixels;
+	int inflationRadius = 0.5 * robotSizeInPixels;
 
+	inflotedMap.resize(height);
+		for (int i = 0; i < height; i++) {
+			inflotedMap[i].resize(width);
+		}
 	// TODO: inflate obstacles
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (map[i][j])
+			{
+				for (int ii = -inflationRadius; ii <= inflationRadius; ii++) {
+					for (int jj = -inflationRadius; jj <= inflationRadius; jj++) {
+						if (i + ii > 0 && i + ii < height && j + jj > 0 && j + jj < width)
+						{
+							inflotedMap[i + ii][j + jj] = true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	printInflotedMap();
 }
 
 bool Map::checkIfCellIsOccupied(int i, int j) {
@@ -51,6 +73,7 @@ bool Map::checkIfCellIsOccupied(int i, int j) {
 }
 
 void Map::printMap() const {
+
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			cout << (map[i][j] ? "*" : " ");
@@ -59,6 +82,15 @@ void Map::printMap() const {
 	}
 }
 
+void Map::printInflotedMap() const {
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			cout << (inflotedMap[i][j] ? "*" : " ");
+		}
+		cout << endl;
+	}
+}
 
 Map::~Map() {
 	// TODO Auto-generated destructor stub

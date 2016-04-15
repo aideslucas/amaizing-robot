@@ -16,12 +16,15 @@ private:
 	unsigned int width;
 	unsigned int height;
 	vector<vector<bool> > map;
+	vector<vector<bool> > inflotedMap;
 	vector<unsigned char> pixels;
 	double mapResolution;
 	double robotSize;
 
 	bool checkIfCellIsOccupied(int i, int j);
 	void printMap() const;
+
+	void printInflotedMap() const;
 
 public:
 	Map(double mapResolution, double robotSize);
