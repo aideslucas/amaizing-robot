@@ -25,7 +25,6 @@ private:
 	bool checkIfCellIsOccupied(int i, int j);
 	void setInflotedCellIsOccupied(int i, int j);
 	void printMap() const;
-
 	void printInflotedMap() const;
 
 public:
