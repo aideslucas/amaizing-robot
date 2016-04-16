@@ -104,13 +104,13 @@ void Map::inflateObstacles()
 			// If current cell is occupied
 			if (map[i][j])
 			{
-				// TODO: Why?
+				// Iterating through, according to inflation radius
 				for (int k = -1 * inflationRadius; k <= inflationRadius; k++)
 				{
-					// TODO: Why?
+					// Iterating through, according to inflation radius
 					for (int m = -1 * inflationRadius; m <= inflationRadius; m++)
 					{
-						// TODO: Why?
+						// if the current cell is to be occupied
 						if (i + k > 0 && i + k < height && j + m > 0 && j + m < width)
 						{
 							// Mark cell as occupied in inflated map
@@ -198,17 +198,14 @@ void Map::printInflotedMap() const {
 
 Map::~Map()
 {
-	// Notifying map vector is being released
-	cout << "Map is being deleted" << endl;
-
 	// Going over all of the cells to the height of the map
 	for (unsigned int i = 0; i < height; i++)
 	{
 		// Going over all of the cells to the width of the map
 		for (unsigned int j = 0; j < width; j++)
 		{
-			// Print map with occupied or unoccupied cells
-			// delete map[i][j];
+			// Clear map elements
+			map.clear();
 		}
 	}
 }
