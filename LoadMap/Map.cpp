@@ -1,8 +1,9 @@
 /*
  * Map.cpp
  *
- *  Created on: Mar 22, 2016
- *      Author: colman
+ *  Created on: April 16, 2016
+ *      Author: Eylam Milner 311212419
+ *      		Lucas Aids	 324392992
  */
 
 #include "Map.h"
