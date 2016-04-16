@@ -19,11 +19,11 @@ int main()
 	// Robot size and map's resolution
 	double  mapResolution;
 	double  robotSize;
-	char 	mapFilePath[50];
+	char 	mapFileName[50];
 
 	// Receive map file path
 	cout << "Please enter a map file name (no relative path): " << endl;
-	cin  >>	mapFilePath;
+	cin  >>	mapFileName;
 
 	// Receive robot size
 	cout << "Please insert the size of the robot: " << endl;
@@ -37,7 +37,7 @@ int main()
 	Map map(mapResolution, robotSize);
 
 	// Loading map
-	map.loadMap(mapFilePath);
+	map.loadMap(mapFileName);
 
 	// Inflate all of the obstacles in the give map
 	map.inflateObstacles();
