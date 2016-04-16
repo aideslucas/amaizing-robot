@@ -13,9 +13,6 @@ using namespace std;
 
 int main()
 {
-	//double mapResolution = 0.025;
-	//double robotSize = 0.3;
-
 	// Robot size and map's resolution
 	double  mapResolution;
 	double  robotSize;
