@@ -7,34 +7,79 @@
  */
 
 #include "Map.h"
-#include "iostream"
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 using namespace std;
 
 int main()
 {
-	// Robot size and map's resolution
-	double  mapResolution;
-	double  robotSize;
-	char 	mapFileName[50];
+	// Parameters from parameters file
+	string	mapFile;
+	double 	robotStartX;
+	double 	robotStartY;
+	double 	robotStartYAW;
+	double 	goalX;
+	double 	goalY;
+	double 	robotHeight;
+	double 	robotWidth;
+	double 	mapResolutionCM;
+	double 	gridResolutionCM;
 
-	// Receive map file path
-	cout << "Please enter a map file name (no relative path): " << endl;
-	cin  >>	mapFileName;
+	// Open parameters file
+	ifstream parameters;
+	parameters.open("parameters.txt");
 
-	// Receive robot size
-	cout << "Please insert the size of the robot: " << endl;
-	cin  >> robotSize;
+	if (parameters.is_open())
+	{
+		string line;
+		string lineName;
 
-	// Receive map resolution
-	cout << "Please insert the resolution of the current map: " << endl;
-	cin  >> mapResolution;
+		// Get Map File - line contains map: path
+		getline(parameters,line);
+		std::istringstream mapLine(line);
+		mapLine >> lineName >> mapFile;
+
+		// Get Robot starting position - line contains startLocation: x y yaw
+		getline(parameters,line);
+		istringstream startLocationLine(line);
+		startLocationLine >> lineName >> robotStartX >> robotStartY >> robotStartYAW;
+
+		// Get Goal - line contains goal: x y
+		getline(parameters,line);
+		istringstream goalLine(line);
+		goalLine >> lineName >> goalX >> goalY;
+
+		// Get Robot Size - line contains robotSize: height width
+		getline(parameters,line);
+		istringstream sizeLine(line);
+		sizeLine >> lineName >> robotHeight >> robotWidth;
+
+		// Get Map resolution in CM - line contains MapResolutionCM: resolution
+		getline(parameters,line);
+		istringstream mapResolutionLine(line);
+		mapResolutionLine >> lineName >> mapResolutionCM;
+
+		// Get Grid resolution in CM - line contains GridResolutionCM: resolution
+		getline(parameters,line);
+		istringstream gridResolutionLine(line);
+		gridResolutionLine >> lineName >> gridResolutionCM;
+
+		parameters.close();
+	}
+	else
+	{
+		cout << "Unable to open file";
+		return 0;
+	}
 
 	// Creating a map object with the given parameters
-	Map map(mapResolution, robotSize);
+	Map map(mapResolutionCM, robotHeight, robotWidth);
 
 	// Loading map
-	map.loadMap(mapFileName);
+	map.loadMap(mapFile);
 
 	// Inflate all of the obstacles in the give map
 	map.inflateObstacles();

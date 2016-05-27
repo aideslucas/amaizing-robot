@@ -11,10 +11,11 @@
 #include <iostream>
 
 // Map's constructor
-Map::Map(double mapResolution, double robotSize)
+Map::Map(double mapResolution, double robotHeight, double robotWidth)
 {
 	// Initialize robot size
-	this->robotSize = robotSize;
+	this->robotHeight 	= robotHeight;
+	this->robotWidth 	= robotWidth;
 
 	// Initialize map resolution
 	this->mapResolution = mapResolution;
@@ -25,10 +26,10 @@ Map::Map(double mapResolution, double robotSize)
 }
 
 // Loading map
-void Map::loadMap(const char* mapFile)
+void Map::loadMap(const string mapFile)
 {
 	// Decode map file
-	lodepng::decode(pixels, width, height, mapFile);
+	unsigned error = lodepng::decode(pixels, width, height, mapFile);
 
 	// Resize the map vector with the height
 	map.resize(height);
@@ -56,7 +57,7 @@ void Map::loadMap(const char* mapFile)
 }
 
 // Saving the new map file
-void Map::saveMap(const char* mapFile)
+void Map::saveMap(const string mapFile)
 {
 	// Resizing the map
 	inflotedPixels.resize(width * height * 4);
@@ -80,7 +81,9 @@ void Map::saveMap(const char* mapFile)
 void Map::inflateObstacles()
 {
 	// Initialize robot size in pixels
-	int robotSizeInPixels = robotSize / mapResolution;
+	int robotHeightInPixels = robotHeight / mapResolution;
+	int robotWidthInPixels = robotWidth / mapResolution;
+	int robotSizeInPixels = max(robotHeightInPixels, robotWidthInPixels);
 
 	// Initialize the radius to inflate
 	int inflationRadius = 0.5 * robotSizeInPixels;
