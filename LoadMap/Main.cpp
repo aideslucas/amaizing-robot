@@ -7,6 +7,7 @@
  */
 
 #include "Map.h"
+#include "Graph.h"
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -83,6 +84,10 @@ int main()
 
 	// Inflate all of the obstacles in the give map
 	map.inflateObstacles();
+
+	// Create a graph from map to run the a star algorithm on it
+	Graph graph(gridResolutionCM);
+	graph.buildGraphFromMap(map);
 
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");

@@ -26,10 +26,10 @@ private:
 	double robotHeight;
 	double robotWidth;
 
-	bool checkIfCellIsOccupied(int i, int j);
 	void setInflotedCellIsOccupied(int i, int j);
 	void printMap() const;
 	void printInflotedMap() const;
+	bool checkIfCellIsOccupied(int i, int j);
 
 public:
 	Map(double mapResolution, double robotHeight, double robotWidth);
@@ -37,6 +37,11 @@ public:
 	void saveMap(const string mapFile);
 	void inflateObstacles();
 	virtual ~Map();
+	unsigned int getWidth() const;
+	unsigned int getHeight() const;
+	double getMapResolution() const;
+	bool checkIfInflotedMapCellIsOccupied(int i, int j) const;
+
 };
 
 #endif /* MAP_H_ */

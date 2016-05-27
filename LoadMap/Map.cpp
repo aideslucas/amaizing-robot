@@ -29,7 +29,7 @@ Map::Map(double mapResolution, double robotHeight, double robotWidth)
 void Map::loadMap(const string mapFile)
 {
 	// Decode map file
-	unsigned error = lodepng::decode(pixels, width, height, mapFile);
+	lodepng::decode(pixels, width, height, mapFile);
 
 	// Resize the map vector with the height
 	map.resize(height);
@@ -147,6 +147,27 @@ bool Map::checkIfCellIsOccupied(int i, int j)
 
 	// if the cell is not occupied, return false value to the map
 	return false;
+}
+
+// Checking if a specific cell of the infloted map is occupied
+bool Map::checkIfInflotedMapCellIsOccupied(int i, int j) const
+{
+	return this->inflotedMap[i][j];
+}
+
+unsigned int Map::getWidth() const
+{
+	return this->width;
+}
+
+unsigned int Map::getHeight() const
+{
+	return this->height;
+}
+
+double Map::getMapResolution() const
+{
+	return this->mapResolution;
 }
 
 // Check if a cell in the inflated map is occupied
