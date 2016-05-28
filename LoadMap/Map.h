@@ -41,7 +41,7 @@ public:
 	unsigned int getHeight() const;
 	double getMapResolution() const;
 	bool checkIfInflotedMapCellIsOccupied(int i, int j) const;
-	void paintCell(int i, int j);
+	void paintCell(int i, int j, int r, int g, int b);
 };
 
 #endif /* MAP_H_ */

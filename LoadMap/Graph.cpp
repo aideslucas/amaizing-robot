@@ -59,20 +59,25 @@ Node Graph::getNodeFromCordinates(int x, int y)
 	return result;
 }
 
-void Graph::paintPathOnMap(Map map, vector<Node *> path)
+void Graph::paintPathOnMap(Map *map, vector<Node> path, int r, int g, int b)
 {
-	Node current;
+	int row,col;
 
 	for (int pathIndex = 0; pathIndex < path.size(); pathIndex++)
 	{
-		current = *path[pathIndex];
+		paintPathOnMap(map, path[pathIndex],r,g,b);
+	}
+}
 
-		for (int i = current.row * resolutionRelation; i < (current.row * resolutionRelation) + resolutionRelation; i++)
+void Graph::paintPathOnMap(Map *map, Node node, int r, int g, int b)
+{
+	int row = node.row;
+	int col = node.col;
+	for (int i = row * resolutionRelation; i < (row * resolutionRelation) + resolutionRelation; i++)
+	{
+		for (int j = col * resolutionRelation; j < (col * resolutionRelation) + resolutionRelation; j++)
 		{
-			for (int j = current.col * resolutionRelation; j < (current.col * resolutionRelation) + resolutionRelation; j++)
-			{
-				map.paintCell(i,j);
-			}
+			map->paintCell(i,j,r,g,b);
 		}
 	}
 }

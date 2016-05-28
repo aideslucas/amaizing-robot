@@ -21,74 +21,93 @@ void AStarAlgorithm::fillHeuristic()
 	{
 		for(int j = 0; j< graph[i].size(); j++)
 		{
-			Node node(j, i);
-			hValue = estimatedHeuristicCost(node,goal);
-			graph[i][j].hValue = hValue;
+			if (!graph[i][j].occupied)
+			{
+				Node node(j, i);
+				hValue = estimatedHeuristicCost(node,goal);
+				graph[i][j].hValue = hValue;
+			}
+		}
+	}
+}
+
+void AStarAlgorithm::fillGAndFValues(Node from)
+{
+	int i,j;
+	double currentGValue;
+	closedSet.insert(from);
+	for(i=from.row-1; i <=from.row+1; i++)
+	{
+		for(j=from.col-1; j <= from.col+1; j++)
+		{
+			if((i >= 0) && (j >= 0) && (i < graph.size()) && (j < graph[i].size()))
+			{
+				Node node(j, i);
+				if (i == goal.row && j == goal.col )
+				{
+					graph[i][j].cameFromCol = from.col;
+					graph[i][j].cameFromRow = from.row;
+					graph[i][j].gValue = 0;
+					graph[i][j].fValue = 0;
+					openSet.insert(node);
+				}
+				else
+				{
+					bool inCloseSet = setContains(closedSet,node);
+					if((graph[i][j].occupied == false)&&(((j != from.col)||(i != from.row)))&&(!inCloseSet))
+					{
+						currentGValue = distance(from, node);
+						bool inOpenSet = setContains(openSet,node);
+						if(inOpenSet)
+						{
+							if (graph[i][j].gValue > currentGValue)
+							{
+								graph[i][j].gValue = currentGValue;
+								graph[i][j].fValue = graph[i][j].gValue + graph[i][j].hValue;
+								graph[i][j].cameFromCol = from.col;
+								graph[i][j].cameFromRow = from.row;
+							}
+						}
+						else
+						{
+							graph[i][j].gValue = currentGValue;
+							graph[i][j].fValue = graph[i][j].gValue + graph[i][j].hValue;
+							graph[i][j].cameFromCol = from.col;
+							graph[i][j].cameFromRow = from.row;
+							openSet.insert(node);
+						}
+					}
+				}
+			}
 		}
 	}
 }
 
 
-vector<Node *> AStarAlgorithm::StartAlgorithm()
+vector<Node> AStarAlgorithm::StartAlgorithm()
 {
 	fillHeuristic();
-	set<Node> closedSet;
-	set<Node> openSet;
-	Node current;
-	double tentativeGValue;
-	vector<Node *> path;
-
-	openSet.insert(start);
-	graph[start.row][start.col].gValue = 0;
-	graph[start.row][start.col].fValue = graph[start.row][start.col].hValue;
+	fillGAndFValues(start);
+	Node lowestFValue;
 
 	while (!openSet.empty())
 	{
-		current = getLowestFValue(openSet);
-		if (current.row == goal.row && current.col == goal.col)
+		lowestFValue.col = getLowestFValue().col;
+		lowestFValue.row = getLowestFValue().row;
+
+		if ((lowestFValue.col == goal.col) &&
+			(lowestFValue.row == goal.row))
 		{
-			path = reconstructPath();
-			return path;
+			reconstructPath();
+
+			return (totalPath);
 		}
 
-		openSet.erase(current);
-		closedSet.insert(current);
-
-		for (int y = current.row-1; y <= current.row+1; y++)
-		{
-			for (int x = current.col-1; x <= current.col+1; x++)
-			{
-				if (y < 0 || y >= graph.size() || x < 0 || x >= graph[y].size())
-				{
-					continue;
-				}
-
-				Node neighbour(x,y);
-				if (setContains(closedSet,neighbour))
-				{
-					continue;
-				}
-
-				tentativeGValue = graph[current.row][current.col].gValue + distance(current, neighbour);
-
-				if (!setContains(openSet,neighbour))
-				{
-					openSet.insert(neighbour);
-				}
-				else if (tentativeGValue >= graph[neighbour.row][neighbour.col].gValue)
-				{
-					continue;
-				}
-
-				graph[neighbour.row][neighbour.col].cameFromRow = current.row;
-				graph[neighbour.row][neighbour.col].cameFromCol = current.col;
-				graph[neighbour.row][neighbour.col].gValue = tentativeGValue;
-				graph[neighbour.row][neighbour.col].fValue = tentativeGValue + graph[current.row][current.col].hValue;
-			}
-		}
+		openSet.erase(lowestFValue);
+		fillGAndFValues(lowestFValue);
 	}
 
-	return path;
+	return (totalPath);
 }
 
 bool AStarAlgorithm::setContains(set<Node> nodeSet, Node current)
@@ -115,27 +134,31 @@ bool AStarAlgorithm::setContains(set<Node> nodeSet, Node current)
 
 double AStarAlgorithm::distance(Node from, Node to)
 {
-	int dx = from.col - to.col;
-	int dy = from.row - to.row;
-
-	double dist = pow(dx,2) + pow(dy,2);
-
-	return sqrt(dist);
+	if((from.col != to.col) && ( from.row != to.row))
+	{
+		return (graph[from.row][from.col].gValue + 14);
+	}
+	else
+	{
+		return (graph[from.row][from.col].gValue + 10);
+	}
 }
 
-const Node AStarAlgorithm::getLowestFValue(const set<Node> nodeSet)
+Node AStarAlgorithm::getLowestFValue()
 {
-	set<Node>::iterator index = nodeSet.begin();
+	set<Node>::iterator index = openSet.begin();
 	Node lowestFValue = *index;
 	Node currentNode;
 
-	for (index = nodeSet.begin(); index != nodeSet.end(); index++)
+	for (index = openSet.begin(); index != openSet.end(); index++)
 	{
-		currentNode = *index;
+		currentNode.col = index->col;
+		currentNode.row = index->row;
 
 		if (graph[currentNode.row][currentNode.col].fValue < graph[lowestFValue.row][lowestFValue.col].fValue)
 		{
-			lowestFValue = currentNode;
+			lowestFValue.col = currentNode.col;
+			lowestFValue.row = currentNode.row;
 		}
 	}
 
@@ -144,44 +167,53 @@ const Node AStarAlgorithm::getLowestFValue(const set<Node> nodeSet)
 
 double AStarAlgorithm::estimatedHeuristicCost(Node from, Node to)
 {
-	return distance(from,to);
+	int dx = from.col - to.col;
+	int dy = from.row - to.row;
+
+	double dist = pow(dx,2) + pow(dy,2);
+
+	return sqrt(dist);
 }
 
-vector<Node *> AStarAlgorithm::reconstructPath()
+void AStarAlgorithm::reconstructPath()
 {
-	Node current (goal.col, goal.row);
+	double currentCol, currentRow, preCol, preRow;
 	int i = 1;
-	while (current.col != start.col || current.row != start.row)
+	vector<Node> path;
+	currentCol = goal.col;
+	currentRow = goal.row;
+
+	while ((currentCol != start.col)||(currentRow != start.row))
 	{
 		i++;
-		current.row = graph[current.row][current.col].cameFromRow;
-		current.col = graph[current.row][current.col].cameFromCol;
+		preCol = currentCol;
+		preRow = currentRow;
+		currentRow = graph[preRow][preCol].cameFromRow;
+		currentCol = graph[preRow][preCol].cameFromCol;
 	}
 
-	vector<Node *> path;
 	path.resize(i);
-	path[0] = &goal;
+	totalPath.resize(i);
 	i = 0;
-	current.row = goal.row;
-	current.col = goal.col;
-
-	while (current.col != start.col || current.row != start.row)
+	currentCol = goal.col;
+	currentRow = goal.row;
+	Node current(currentCol, currentRow);
+	path[0] = current;
+	while ((currentCol != start.col)||(currentRow != start.row))
 	{
 		i++;
-		current.row = graph[current.row][current.col].cameFromRow;
-		current.col = graph[current.row][current.col].cameFromCol;
-		path[i] = &current;
+		preCol = currentCol;
+		preRow = currentRow;
+		currentRow = graph[preRow][preCol].cameFromRow;
+		currentCol = graph[preRow][preCol].cameFromCol;
+		Node pre(currentCol, currentRow);
+		path[i] = pre;
 	}
 
-	vector<Node *> totalPath;
-	totalPath.resize(path.size());
-
-	for (i = path.size(); i >=0; i--)
+	for (int j = path.size() - 1; j >= 0; j--)
 	{
-		totalPath[path.size() - i] = path[i];
+		totalPath[path.size() -1 - j] = path[j];
 	}
-
-	return totalPath;
 }
 
 AStarAlgorithm::~AStarAlgorithm() {

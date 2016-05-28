@@ -59,20 +59,6 @@ void Map::loadMap(const string mapFile)
 // Saving the new map file
 void Map::saveMap(const string mapFile)
 {
-	// Resizing the map
-	inflotedPixels.resize(width * height * 4);
-
-	// Going over all of the cells to the height of the map
-	for (unsigned int i = 0; i < height; i++)
-	{
-		// Going over all of the cells to the width of the map
-		for (unsigned int j = 0; j < width; j++)
-		{
-			// Set the current cell occupation
-			setInflotedCellIsOccupied(i, j);
-		}
-	}
-
 	// Encode map file
 	lodepng::encode(mapFile, inflotedPixels, width, height);
 }
@@ -122,6 +108,20 @@ void Map::inflateObstacles()
 					}
 				}
 			}
+		}
+	}
+
+	// Resizing the map
+	inflotedPixels.resize(width * height * 4);
+
+	// Going over all of the cells to the height of the map
+	for (unsigned int i = 0; i < height; i++)
+	{
+		// Going over all of the cells to the width of the map
+		for (unsigned int j = 0; j < width; j++)
+		{
+			// Set the current cell occupation
+			setInflotedCellIsOccupied(i, j);
 		}
 	}
 
@@ -235,14 +235,14 @@ Map::~Map()
 }
 
 // Check if a cell in the inflated map is occupied
-void Map::paintCell(int i, int j)
+void Map::paintCell(int i, int j,int r,int g,int b)
 {
 	// Initialize color and cell
-	int c = (i * width + j) * 4;
+	unsigned int c = (i * width + j) * 4;
 
 	// Set the inflated cell color
-	inflotedPixels[c] = 0;
-	inflotedPixels[c + 1] = 255;
-	inflotedPixels[c + 2] = 0;
+	inflotedPixels[c] = r;
+	inflotedPixels[c + 1] = g;
+	inflotedPixels[c + 2] = b;
 	inflotedPixels[c + 3] = 255;
 }

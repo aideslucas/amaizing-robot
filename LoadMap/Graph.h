@@ -34,7 +34,8 @@ public:
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
 	Node getNodeFromCordinates(int x, int y);
-	void paintPathOnMap(Map map, vector<Node *> path);
+	void paintPathOnMap(Map *map, vector<Node> path, int r, int g, int b);
+	void paintPathOnMap(Map *map, Node node, int r, int g, int b);
 };
 
 #endif /* GRAPH_H_ */

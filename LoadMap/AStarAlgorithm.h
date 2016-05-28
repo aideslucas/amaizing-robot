@@ -20,17 +20,20 @@ private:
 	vector<vector<point> > graph;
 	Node start;
 	Node goal;
-
+	set<Node> openSet;
+	set<Node> closedSet;
+	vector<Node> totalPath;
 public:
 	AStarAlgorithm(vector<vector<point> > graph, Node start, Node goal);
 	virtual ~AStarAlgorithm();
-	vector<Node *> StartAlgorithm();
+	vector<Node> StartAlgorithm();
 	double distance(Node from, Node to);
 	bool setContains(set<Node> nodeSet, Node current);
-	const Node getLowestFValue(const set<Node> nodeSet);
+	Node getLowestFValue();
 	double estimatedHeuristicCost(Node from, Node to);
-	vector<Node *> reconstructPath();
+	void reconstructPath();
 	void fillHeuristic();
+	void fillGAndFValues(Node from);
 };
 
 #endif /* ASTARALGORITHM_H_ */

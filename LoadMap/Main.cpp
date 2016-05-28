@@ -92,9 +92,10 @@ int main()
 	Node start = graph.getNodeFromCordinates(robotStartX, robotStartY);
 	Node goal = graph.getNodeFromCordinates(goalX, goalY);
 	AStarAlgorithm algo(graph.nodes, start, goal);
-	vector<Node *> path = algo.StartAlgorithm();
-	graph.paintPathOnMap(map, path);
-
+	vector<Node> path = algo.StartAlgorithm();
+	graph.paintPathOnMap(&map, path,0,255,0);
+	graph.paintPathOnMap(&map, start,255,0,0);
+	graph.paintPathOnMap(&map, goal,0,0,255);
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");
 
