@@ -13,18 +13,34 @@ AStarAlgorithm::AStarAlgorithm(vector<vector<point> > graph, Node start, Node go
 	this->start = start;
 }
 
+void AStarAlgorithm::fillHeuristic()
+{
+	double hValue;
+
+	for (int i = 0; i < graph.size(); i++)
+	{
+		for(int j = 0; j< graph[i].size(); j++)
+		{
+			Node node(j, i);
+			hValue = estimatedHeuristicCost(node,goal);
+			graph[i][j].hValue = hValue;
+		}
+	}
+}
+
+
 vector<Node *> AStarAlgorithm::StartAlgorithm()
 {
+	fillHeuristic();
 	set<Node> closedSet;
 	set<Node> openSet;
 	Node current;
-	Node neighbour;
 	double tentativeGValue;
 	vector<Node *> path;
 
 	openSet.insert(start);
 	graph[start.row][start.col].gValue = 0;
-	graph[start.row][start.col].fValue = estimatedHeuristicCost(start, goal);
+	graph[start.row][start.col].fValue = graph[start.row][start.col].hValue;
 
 	while (!openSet.empty())
 	{
@@ -64,9 +80,10 @@ vector<Node *> AStarAlgorithm::StartAlgorithm()
 					continue;
 				}
 
-				graph[neighbour.row][neighbour.col].cameFrom = current;
+				graph[neighbour.row][neighbour.col].cameFromRow = current.row;
+				graph[neighbour.row][neighbour.col].cameFromCol = current.col;
 				graph[neighbour.row][neighbour.col].gValue = tentativeGValue;
-				graph[neighbour.row][neighbour.col].fValue = tentativeGValue + estimatedHeuristicCost(neighbour, goal);
+				graph[neighbour.row][neighbour.col].fValue = tentativeGValue + graph[current.row][current.col].hValue;
 			}
 		}
 	}
@@ -127,30 +144,32 @@ const Node AStarAlgorithm::getLowestFValue(const set<Node> nodeSet)
 
 double AStarAlgorithm::estimatedHeuristicCost(Node from, Node to)
 {
-
 	return distance(from,to);
 }
 
 vector<Node *> AStarAlgorithm::reconstructPath()
 {
-	Node current, cameFrom;
-	current = goal;
+	Node current (goal.col, goal.row);
 	int i = 1;
 	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
-		current = graph[current.row][current.col].cameFrom;
+		current.row = graph[current.row][current.col].cameFromRow;
+		current.col = graph[current.row][current.col].cameFromCol;
 	}
 
 	vector<Node *> path;
 	path.resize(i);
 	path[0] = &goal;
 	i = 0;
-	current = goal;
+	current.row = goal.row;
+	current.col = goal.col;
+
 	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
-		current = graph[current.row][current.col].cameFrom;
+		current.row = graph[current.row][current.col].cameFromRow;
+		current.col = graph[current.row][current.col].cameFromCol;
 		path[i] = &current;
 	}
 

@@ -1,5 +1,5 @@
 map: /home/colman/Desktop/roboticLabMap.png
-startLocation: 362 305 20
+startLocation: 180 150 20
 goal: 169 138
 robotSize: 30 30
 MapResolutionCM: 2.5

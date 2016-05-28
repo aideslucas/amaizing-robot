@@ -20,7 +20,8 @@ struct point
 	double fValue;
 	double gValue;
 	double hValue;
-	Node cameFrom;
+	int cameFromRow;
+	int cameFromCol;
 };
 
 class Graph {

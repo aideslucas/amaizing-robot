@@ -30,6 +30,7 @@ public:
 	const Node getLowestFValue(const set<Node> nodeSet);
 	double estimatedHeuristicCost(Node from, Node to);
 	vector<Node *> reconstructPath();
+	void fillHeuristic();
 };
 
 #endif /* ASTARALGORITHM_H_ */
