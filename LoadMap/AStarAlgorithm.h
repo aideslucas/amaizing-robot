@@ -12,6 +12,7 @@
 #include <vector>
 #include "Node.h"
 #include "Graph.h"
+#include "math.h"
 
 class AStarAlgorithm {
 
@@ -28,9 +29,9 @@ public:
 	bool setContains(set<Node> nodeSet, Node current);
 	const Node getLowestFValue(const set<Node> nodeSet);
 
-	int estimatedHeuristicCost(Node from, Node to);
+	double estimatedHeuristicCost(Node from, Node to);
 
-	set<Node> reconstructPath(vector<Node> path, Node current);
+	set<Node> reconstructPath();
 
 };
 

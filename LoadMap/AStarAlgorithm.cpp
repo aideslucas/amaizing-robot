@@ -18,7 +18,6 @@ set<Node> AStarAlgorithm::StartAlgorithm()
 {
 	set<Node> closedSet;
 	set<Node> openSet;
-	vector<Node> cameFrom;
 	Node current;
 	Node neighbour;
 	double tentativeGValue;
@@ -33,7 +32,7 @@ set<Node> AStarAlgorithm::StartAlgorithm()
 		current = getLowestFValue(openSet);
 		if (current.row == goal.row && current.col == goal.col)
 		{
-			return reconstructPath(cameFrom, current);
+			return reconstructPath();
 		}
 
 		openSet.erase(current);
@@ -92,8 +91,8 @@ bool AStarAlgorithm::setContains(set<Node> nodeSet, Node current)
 
 double AStarAlgorithm::distance(Node from, Node to)
 {
-	int dx = abs(from.col - to.col);
-	int dy = abs(from.row - to.row);
+	int dx = from.col - to.col;
+	int dy = from.row - to.row;
 
 	double dist = pow(dx,2) + pow(dy,2);
 
@@ -119,17 +118,43 @@ const Node AStarAlgorithm::getLowestFValue(const set<Node> nodeSet)
 	return lowestFValue;
 }
 
-int AStarAlgorithm::estimatedHeuristicCost(Node from, Node to)
+double AStarAlgorithm::estimatedHeuristicCost(Node from, Node to)
 {
-	return 0;
+
+	return distance(from,to);
 }
 
-set<Node> AStarAlgorithm::reconstructPath(vector<Node> path, Node current)
+set<Node> AStarAlgorithm::reconstructPath()
 {
-	set<Node> totalPath;
-	totalPath.insert(current);
-	return totalPath;
+	Node current, cameFrom;
+	current = goal;
+	int i = 1;
+	while (current != start)
+	{
+		i++;
+		current = current.cameFrom;
+	}
 
+	vector<Node> path;
+	path.resize(i);
+	path[0] = goal;
+	i = 0;
+	current = goal;
+	while (current != start)
+	{
+		i++;
+		current = current.cameFrom;
+		path[i] = current;
+	}
+
+	set<Node> totalPath;
+
+	for (i; i >=0; i--)
+	{
+		totalPath.insert(path[i]);
+	}
+
+	return totalPath;
 }
 
 AStarAlgorithm::~AStarAlgorithm() {

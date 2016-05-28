@@ -12,6 +12,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "AStarAlgorithm.h"
 
 using namespace std;
 
@@ -88,6 +89,10 @@ int main()
 	// Create a graph from map to run the a star algorithm on it
 	Graph graph(gridResolutionCM);
 	graph.buildGraphFromMap(map);
+	Node start = graph.getNodeFromCordinates(robotStartX, robotStartY);
+	Node goal = graph.getNodeFromCordinates(goalX, goalY);
+	AStarAlgorithm algo(graph.nodes, start, goal);
+	set<Node> path = algo.StartAlgorithm();
 
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");

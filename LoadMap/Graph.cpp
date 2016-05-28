@@ -17,7 +17,7 @@ Graph::~Graph() {
 
 void Graph::buildGraphFromMap(const Map map)
 {
-	int resolutionRelation = graphResolutionInCM / map.getMapResolution();
+	this->resolutionRelation = graphResolutionInCM / map.getMapResolution();
 	int graphRows = map.getHeight() * map.getMapResolution() / graphResolutionInCM;
 	int graphColumns = map.getWidth() * map.getMapResolution() / graphResolutionInCM;
 	bool isCellOcupied;
@@ -29,21 +29,28 @@ void Graph::buildGraphFromMap(const Map map)
 		this->nodes[index].resize(graphColumns);
 	}
 
-	for (int y = 0; y < (graphRows * resolutionRelation); y += resolutionRelation)
+	for (int y = 0; y < graphRows; y ++)
 	{
-		for (int x = 0; x < (graphColumns * resolutionRelation); x += resolutionRelation)
+		for (int x = 0; x < graphColumns; x ++)
 		{
 			isCellOcupied = false;
-			for (int i = y ; (i < y + resolutionRelation) && (!isCellOcupied); i++)
+			for (int i = (y * resolutionRelation) ; (i < (y * resolutionRelation) + resolutionRelation) && (!isCellOcupied); i++)
 			{
-				for (int j = x ; (j < x + resolutionRelation)&&(!isCellOcupied); j++)
+				for (int j = (x * resolutionRelation); (j < (x * resolutionRelation) + resolutionRelation) && (!isCellOcupied); j++)
 				{
 					isCellOcupied = map.checkIfInflotedMapCellIsOccupied(i,j);
 				}
 			}
 
-			(this->nodes[y / resolutionRelation][x / resolutionRelation])->setNode(y,x,isCellOcupied);
+			(this->nodes[y][x])->setNode(y,x,isCellOcupied);
 		}
 	}
 }
 
+Node Graph::getNodeFromCordinates(int x, int y)
+{
+	int row = y / resolutionRelation;
+	int col = x / resolutionRelation;
+
+	return this->nodes[row][col];
+}

@@ -13,13 +13,14 @@
 
 class Graph {
 private:
-	double					graphResolutionInCM;
-
+	double	graphResolutionInCM;
+	double	resolutionRelation;
 public:
 	vector<vector<Node *> > nodes;
 	void buildGraphFromMap(const Map map);
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
+	Node Graph::getNodeFromCordinates(int x, int y);
 };
 
 #endif /* GRAPH_H_ */
