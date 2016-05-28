@@ -8,23 +8,14 @@
 #include "Node.h"
 
 Node::Node() {
-	neighbors.resize(DIRECTIONS_NUM);
-	this->fValue = 0;
-	this->gValue = 0;
-	this->hValue = 0;
-	this->cameFrom = 0;
+	this->row = 0;
+	this->col = 0;
 }
 
-void Node::setOccupied()
+Node::Node(int x, int y)
 {
-	this->occupied = true;
-}
-
-void Node::setNode(int row, int col, bool occupied)
-{
-	this->row = row;
-	this->col = col;
-	this->occupied = occupied;
+	this->row = y;
+	this->col = x;
 }
 
 Node::~Node() {

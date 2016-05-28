@@ -7,7 +7,7 @@
 
 #include "AStarAlgorithm.h"
 
-AStarAlgorithm::AStarAlgorithm(vector<vector<Node *> > graph, Node start, Node goal) {
+AStarAlgorithm::AStarAlgorithm(vector<vector<point> > graph, Node start, Node goal) {
 	this->goal = goal;
 	this->graph = graph;
 	this->start = start;
@@ -23,9 +23,8 @@ vector<Node *> AStarAlgorithm::StartAlgorithm()
 	vector<Node *> path;
 
 	openSet.insert(start);
-
-	start.gValue = 0;
-	start.fValue = estimatedHeuristicCost(start, goal);
+	graph[start.row][start.col].gValue = 0;
+	graph[start.row][start.col].fValue = estimatedHeuristicCost(start, goal);
 
 	while (!openSet.empty())
 	{
@@ -43,26 +42,31 @@ vector<Node *> AStarAlgorithm::StartAlgorithm()
 		{
 			for (int x = current.col-1; x <= current.col+1; x++)
 			{
-				neighbour = *graph[y][x];
+				if (y < 0 || y >= graph.size() || x < 0 || x >= graph[y].size())
+				{
+					continue;
+				}
+
+				Node neighbour(x,y);
 				if (setContains(closedSet,neighbour))
 				{
 					continue;
 				}
 
-				tentativeGValue = current.gValue + distance(current, neighbour);
+				tentativeGValue = graph[current.row][current.col].gValue + distance(current, neighbour);
 
 				if (!setContains(openSet,neighbour))
 				{
 					openSet.insert(neighbour);
 				}
-				else if (tentativeGValue >= neighbour.gValue)
+				else if (tentativeGValue >= graph[neighbour.row][neighbour.col].gValue)
 				{
 					continue;
 				}
 
-				neighbour.cameFrom = &current;
-				neighbour.gValue = tentativeGValue;
-				neighbour.fValue = tentativeGValue + estimatedHeuristicCost(neighbour, goal);
+				graph[neighbour.row][neighbour.col].cameFrom = current;
+				graph[neighbour.row][neighbour.col].gValue = tentativeGValue;
+				graph[neighbour.row][neighbour.col].fValue = tentativeGValue + estimatedHeuristicCost(neighbour, goal);
 			}
 		}
 	}
@@ -112,7 +116,7 @@ const Node AStarAlgorithm::getLowestFValue(const set<Node> nodeSet)
 	{
 		currentNode = *index;
 
-		if (currentNode.fValue < lowestFValue.fValue)
+		if (graph[currentNode.row][currentNode.col].fValue < graph[lowestFValue.row][lowestFValue.col].fValue)
 		{
 			lowestFValue = currentNode;
 		}
@@ -135,7 +139,7 @@ vector<Node *> AStarAlgorithm::reconstructPath()
 	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
-		current = *current.cameFrom;
+		current = graph[current.row][current.col].cameFrom;
 	}
 
 	vector<Node *> path;
@@ -146,7 +150,7 @@ vector<Node *> AStarAlgorithm::reconstructPath()
 	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
-		current = *current.cameFrom;
+		current = graph[current.row][current.col].cameFrom;
 		path[i] = &current;
 	}
 

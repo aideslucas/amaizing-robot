@@ -9,6 +9,7 @@
 
 Graph::Graph(double graphResolutionInCM) {
 	this->graphResolutionInCM = graphResolutionInCM;
+	this->resolutionRelation = 0;
 }
 
 Graph::~Graph() {
@@ -42,7 +43,9 @@ void Graph::buildGraphFromMap(const Map map)
 				}
 			}
 
-			(this->nodes[y][x])->setNode(y,x,isCellOcupied);
+			this->nodes[y][x].col = x;
+			this->nodes[y][x].row = y;
+			this->nodes[y][x].occupied = isCellOcupied;
 		}
 	}
 }
@@ -51,18 +54,19 @@ Node Graph::getNodeFromCordinates(int x, int y)
 {
 	int row = y / resolutionRelation;
 	int col = x / resolutionRelation;
+	Node result(row,col);
 
-	return *(this->nodes[row][col]);
+	return result;
 }
 
-void Graph::paintPathOnMap(Map map, set<Node> path)
+void Graph::paintPathOnMap(Map map, vector<Node *> path)
 {
-	set<Node>::iterator index;
 	Node current;
 
-	for (index = path.begin(); index != path.end(); index++)
+	for (int pathIndex = 0; pathIndex < path.size(); pathIndex++)
 	{
-		current = *index;
+		current = *path[pathIndex];
+
 		for (int i = current.row * resolutionRelation; i < (current.row * resolutionRelation) + resolutionRelation; i++)
 		{
 			for (int j = current.col * resolutionRelation; j < (current.col * resolutionRelation) + resolutionRelation; j++)

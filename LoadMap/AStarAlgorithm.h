@@ -17,12 +17,12 @@
 class AStarAlgorithm {
 
 private:
-	vector<vector<Node *> > graph;
+	vector<vector<point> > graph;
 	Node start;
 	Node goal;
 
 public:
-	AStarAlgorithm(vector<vector<Node *> > graph, Node start, Node goal);
+	AStarAlgorithm(vector<vector<point> > graph, Node start, Node goal);
 	virtual ~AStarAlgorithm();
 	vector<Node *> StartAlgorithm();
 	double distance(Node from, Node to);
