@@ -16,16 +16,17 @@ enum Direction { LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN
 
 class Node {
 private:
-	int row;
-	int col;
 	vector<Node *> neighbors;
 	bool occupied;
+
+public:
+	int row;
+	int col;
 	double fValue;
 	double gValue;
 	double hValue;
 	Node *cameFrom;
 
-public:
 	Node();
 	void setNode(int row, int col, bool occupied);
 	void setOccupied();

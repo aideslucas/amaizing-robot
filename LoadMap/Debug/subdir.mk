@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../AStarAlgorithm.cpp \
 ../Graph.cpp \
 ../Main.cpp \
 ../Map.cpp \
@@ -11,6 +12,7 @@ CPP_SRCS += \
 ../lodepng.cpp 
 
 OBJS += \
+./AStarAlgorithm.o \
 ./Graph.o \
 ./Main.o \
 ./Map.o \
@@ -18,6 +20,7 @@ OBJS += \
 ./lodepng.o 
 
 CPP_DEPS += \
+./AStarAlgorithm.d \
 ./Graph.d \
 ./Main.d \
 ./Map.d \

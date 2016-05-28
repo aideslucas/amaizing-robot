@@ -13,10 +13,10 @@
 
 class Graph {
 private:
-	vector<vector<Node *> > nodes;
 	double					graphResolutionInCM;
 
 public:
+	vector<vector<Node *> > nodes;
 	void buildGraphFromMap(const Map map);
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
