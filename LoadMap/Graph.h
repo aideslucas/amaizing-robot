@@ -20,7 +20,7 @@ public:
 	void buildGraphFromMap(const Map map);
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
-	Node Graph::getNodeFromCordinates(int x, int y);
+	Node getNodeFromCordinates(int x, int y);
 };
 
 #endif /* GRAPH_H_ */

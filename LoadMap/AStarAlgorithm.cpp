@@ -129,10 +129,10 @@ set<Node> AStarAlgorithm::reconstructPath()
 	Node current, cameFrom;
 	current = goal;
 	int i = 1;
-	while (current != start)
+	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
-		current = current.cameFrom;
+		current = *current.cameFrom;
 	}
 
 	vector<Node> path;
@@ -140,10 +140,10 @@ set<Node> AStarAlgorithm::reconstructPath()
 	path[0] = goal;
 	i = 0;
 	current = goal;
-	while (current != start)
+	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
-		current = current.cameFrom;
+		current = *current.cameFrom;
 		path[i] = current;
 	}
 
