@@ -21,6 +21,7 @@ public:
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
 	Node getNodeFromCordinates(int x, int y);
+	void paintPathOnMap(Map map, set<Node> path);
 };
 
 #endif /* GRAPH_H_ */

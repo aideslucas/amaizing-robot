@@ -93,6 +93,7 @@ int main()
 	Node goal = graph.getNodeFromCordinates(goalX, goalY);
 	AStarAlgorithm algo(graph.nodes, start, goal);
 	set<Node> path = algo.StartAlgorithm();
+	graph.paintPathOnMap(map, path);
 
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");

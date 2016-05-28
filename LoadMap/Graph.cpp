@@ -54,3 +54,21 @@ Node Graph::getNodeFromCordinates(int x, int y)
 
 	return this->nodes[row][col];
 }
+
+void Graph::paintPathOnMap(Map map, set<Node> path)
+{
+	set<Node>::iterator index;
+	Node current;
+
+	for (index = path.begin(); index != path.end(); index++)
+	{
+		current = *index;
+		for (int i = current.row * resolutionRelation; i < (current.row * resolutionRelation) + resolutionRelation; i++)
+		{
+			for (int j = current.col * resolutionRelation; j < (current.col * resolutionRelation) + resolutionRelation; j++)
+			{
+				map.paintCell(i,j);
+			}
+		}
+	}
+}

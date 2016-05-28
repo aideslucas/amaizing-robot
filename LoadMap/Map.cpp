@@ -234,3 +234,15 @@ Map::~Map()
 	}
 }
 
+// Check if a cell in the inflated map is occupied
+void Map::paintCell(int i, int j)
+{
+	// Initialize color and cell
+	int c = (i * width + j) * 4;
+
+	// Set the inflated cell color
+	inflotedPixels[c] = 0;
+	inflotedPixels[c + 1] = 255;
+	inflotedPixels[c + 2] = 0;
+	inflotedPixels[c + 3] = 255;
+}
