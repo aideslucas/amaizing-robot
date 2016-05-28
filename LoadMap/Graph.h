@@ -10,6 +10,7 @@
 
 #include "Node.h"
 #include "Map.h"
+#include "set"
 
 class Graph {
 private:

@@ -92,7 +92,8 @@ int main()
 	Node start = graph.getNodeFromCordinates(robotStartX, robotStartY);
 	Node goal = graph.getNodeFromCordinates(goalX, goalY);
 	AStarAlgorithm algo(graph.nodes, start, goal);
-	set<Node> path = algo.StartAlgorithm();
+	set<Node> path ;//= algo.StartAlgorithm();
+
 	graph.paintPathOnMap(map, path);
 
 	// Save the new inflated map the a new file

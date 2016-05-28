@@ -8,6 +8,7 @@
 #ifndef NODE_H_
 #define NODE_H_
 
+#include "limits.h"
 #include <vector>
 using namespace std;
 
@@ -31,6 +32,11 @@ public:
 	void setNode(int row, int col, bool occupied);
 	void setOccupied();
 	virtual ~Node();
+
+	bool operator<(const Node& node) const
+	{
+		return (row*INT_MAX + col < node.row*INT_MAX + node.col);
+	}
 };
 
 #endif /* NODE_H_ */

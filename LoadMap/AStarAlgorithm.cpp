@@ -6,21 +6,21 @@
  */
 
 #include "AStarAlgorithm.h"
-#include "math.h"
 
-AStarAlgorithm::AStarAlgorithm(vector<vector<Node> > graph, Node start, Node goal) {
+AStarAlgorithm::AStarAlgorithm(vector<vector<Node *> > graph, Node start, Node goal) {
 	this->goal = goal;
 	this->graph = graph;
 	this->start = start;
 }
 
-set<Node> AStarAlgorithm::StartAlgorithm()
+vector<Node *> AStarAlgorithm::StartAlgorithm()
 {
 	set<Node> closedSet;
 	set<Node> openSet;
 	Node current;
 	Node neighbour;
 	double tentativeGValue;
+	vector<Node *> path;
 
 	openSet.insert(start);
 
@@ -32,7 +32,8 @@ set<Node> AStarAlgorithm::StartAlgorithm()
 		current = getLowestFValue(openSet);
 		if (current.row == goal.row && current.col == goal.col)
 		{
-			return reconstructPath();
+			path = reconstructPath();
+			return path;
 		}
 
 		openSet.erase(current);
@@ -42,7 +43,7 @@ set<Node> AStarAlgorithm::StartAlgorithm()
 		{
 			for (int x = current.col-1; x <= current.col+1; x++)
 			{
-				neighbour = graph[y][x];
+				neighbour = *graph[y][x];
 				if (setContains(closedSet,neighbour))
 				{
 					continue;
@@ -65,6 +66,8 @@ set<Node> AStarAlgorithm::StartAlgorithm()
 			}
 		}
 	}
+
+	return path;
 }
 
 bool AStarAlgorithm::setContains(set<Node> nodeSet, Node current)
@@ -124,7 +127,7 @@ double AStarAlgorithm::estimatedHeuristicCost(Node from, Node to)
 	return distance(from,to);
 }
 
-set<Node> AStarAlgorithm::reconstructPath()
+vector<Node *> AStarAlgorithm::reconstructPath()
 {
 	Node current, cameFrom;
 	current = goal;
@@ -135,23 +138,24 @@ set<Node> AStarAlgorithm::reconstructPath()
 		current = *current.cameFrom;
 	}
 
-	vector<Node> path;
+	vector<Node *> path;
 	path.resize(i);
-	path[0] = goal;
+	path[0] = &goal;
 	i = 0;
 	current = goal;
 	while (current.col != start.col || current.row != start.row)
 	{
 		i++;
 		current = *current.cameFrom;
-		path[i] = current;
+		path[i] = &current;
 	}
 
-	set<Node> totalPath;
+	vector<Node *> totalPath;
+	totalPath.resize(path.size());
 
-	for (i; i >=0; i--)
+	for (i = path.size(); i >=0; i--)
 	{
-		totalPath.insert(path[i]);
+		totalPath[path.size() - i] = path[i];
 	}
 
 	return totalPath;
