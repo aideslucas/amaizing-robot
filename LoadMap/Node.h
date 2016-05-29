@@ -14,16 +14,47 @@ using namespace std;
 
 class Node {
 public:
+	bool occupied;
 	int row;
 	int col;
+	double fValue;
+	double gValue;
+	double hValue;
+	int cameFromRow;
+	int cameFromCol;
 
 	Node();
 	Node(int x, int y);
+	Node(const Node& node);
 	virtual ~Node();
 
+	void operator()(int col, int row)
+	{
+		this->col = col;
+		this->row = row;
+	}
 	bool operator<(const Node& node) const
 	{
 		return (row*INT_MAX + col < node.row*INT_MAX + node.col);
+	}
+	void operator=(const Node& node)
+	{
+		this->col = node.col;
+		this->row = node.row;
+		this->occupied = node.occupied;
+		this->fValue = node.fValue;
+		this->hValue = node.hValue;
+		this->gValue = node.gValue;
+		this->cameFromCol = node.cameFromCol;
+		this->cameFromRow = node.cameFromRow;
+	}
+	bool operator==(const Node& node) const
+	{
+		return (this->col == node.col && this->row == node.row);
+	}
+	bool operator!=(const Node& node) const
+	{
+		return (this->col != node.col || this->row != node.row);
 	}
 };
 

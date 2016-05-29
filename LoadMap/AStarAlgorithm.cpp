@@ -7,7 +7,7 @@
 
 #include "AStarAlgorithm.h"
 
-AStarAlgorithm::AStarAlgorithm(vector<vector<point> > graph, Node start, Node goal) {
+AStarAlgorithm::AStarAlgorithm(vector<vector<Node> > graph, Node start, Node goal) {
 	this->goal = goal;
 	this->graph = graph;
 	this->start = start;
@@ -177,37 +177,29 @@ double AStarAlgorithm::estimatedHeuristicCost(Node from, Node to)
 
 void AStarAlgorithm::reconstructPath()
 {
-	double currentCol, currentRow, preCol, preRow;
+	Node current, prev;
 	int i = 1;
 	vector<Node> path;
-	currentCol = goal.col;
-	currentRow = goal.row;
+	current = goal;
 
-	while ((currentCol != start.col)||(currentRow != start.row))
+	while (current != start)
 	{
 		i++;
-		preCol = currentCol;
-		preRow = currentRow;
-		currentRow = graph[preRow][preCol].cameFromRow;
-		currentCol = graph[preRow][preCol].cameFromCol;
+		prev = current;
+		current(prev.cameFromCol,prev.cameFromRow);
 	}
 
 	path.resize(i);
 	totalPath.resize(i);
 	i = 0;
-	currentCol = goal.col;
-	currentRow = goal.row;
-	Node current(currentCol, currentRow);
+	current = goal;
 	path[0] = current;
-	while ((currentCol != start.col)||(currentRow != start.row))
+	while (current != start)
 	{
 		i++;
-		preCol = currentCol;
-		preRow = currentRow;
-		currentRow = graph[preRow][preCol].cameFromRow;
-		currentCol = graph[preRow][preCol].cameFromCol;
-		Node pre(currentCol, currentRow);
-		path[i] = pre;
+		prev = current;
+		current(prev.cameFromCol,prev.cameFromRow);
+		path[i] = current;
 	}
 
 	for (int j = path.size() - 1; j >= 0; j--)

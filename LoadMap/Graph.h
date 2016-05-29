@@ -29,7 +29,7 @@ private:
 	double	graphResolutionInCM;
 	double	resolutionRelation;
 public:
-	vector<vector<point> > nodes;
+	vector<vector<Node> > nodes;
 	void buildGraphFromMap(const Map map);
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
