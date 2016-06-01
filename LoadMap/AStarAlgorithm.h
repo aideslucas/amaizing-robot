@@ -23,6 +23,7 @@ private:
 	set<Node> openSet;
 	set<Node> closedSet;
 	vector<Node> totalPath;
+
 public:
 	AStarAlgorithm(vector<vector<Node> > graph, Node start, Node goal);
 	virtual ~AStarAlgorithm();

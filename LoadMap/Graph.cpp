@@ -54,9 +54,7 @@ Node Graph::getNodeFromCordinates(int x, int y)
 {
 	int row = y / resolutionRelation;
 	int col = x / resolutionRelation;
-	Node result(row,col);
-
-	return result;
+	return this->nodes[row][col];
 }
 
 void Graph::paintPathOnMap(Map *map, vector<Node> path, int r, int g, int b)

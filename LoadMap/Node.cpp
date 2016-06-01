@@ -11,11 +11,9 @@ Node::Node() {
 	this->row = 0;
 	this->col = 0;
 	this->occupied = 0;
-	this->fValue = 0;
-	this->hValue = 0;
-	this->gValue = 0;
-	this->cameFromCol = 0;
-	this->cameFromRow = 0;
+	this->fValue = INT_MAX;
+	this->hValue = INT_MAX;
+	this->gValue = INT_MAX;
 }
 
 Node::Node(int x, int y)
@@ -23,11 +21,9 @@ Node::Node(int x, int y)
 	this->row = y;
 	this->col = x;
 	this->occupied = 0;
-	this->fValue = 0;
-	this->hValue = 0;
-	this->gValue = 0;
-	this->cameFromCol = 0;
-	this->cameFromRow = 0;
+	this->fValue = INT_MAX;
+	this->hValue = INT_MAX;
+	this->gValue = INT_MAX;
 }
 
 Node::Node(const Node& node)
@@ -38,8 +34,8 @@ Node::Node(const Node& node)
 	this->fValue = node.fValue;
 	this->hValue = node.hValue;
 	this->gValue = node.gValue;
-	this->cameFromCol = node.cameFromCol;
-	this->cameFromRow = node.cameFromRow;
+	this->parentRow = node.parentRow;
+	this->parentCol = node.parentCol;
 }
 
 Node::~Node() {

@@ -20,8 +20,8 @@ public:
 	double fValue;
 	double gValue;
 	double hValue;
-	int cameFromRow;
-	int cameFromCol;
+	int parentRow;
+	int parentCol;
 
 	Node();
 	Node(int x, int y);
@@ -37,7 +37,7 @@ public:
 	{
 		return (row*INT_MAX + col < node.row*INT_MAX + node.col);
 	}
-	void operator=(const Node& node)
+/*	void operator=(const Node& node)
 	{
 		this->col = node.col;
 		this->row = node.row;
@@ -45,9 +45,8 @@ public:
 		this->fValue = node.fValue;
 		this->hValue = node.hValue;
 		this->gValue = node.gValue;
-		this->cameFromCol = node.cameFromCol;
-		this->cameFromRow = node.cameFromRow;
-	}
+		this->parent = node.parent;
+	}*/
 	bool operator==(const Node& node) const
 	{
 		return (this->col == node.col && this->row == node.row);

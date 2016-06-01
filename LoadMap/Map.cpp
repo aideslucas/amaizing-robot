@@ -60,7 +60,7 @@ void Map::loadMap(const string mapFile)
 void Map::saveMap(const string mapFile)
 {
 	// Encode map file
-	lodepng::encode(mapFile, inflotedPixels, width, height);
+	lodepng::encode(mapFile, pixels, width, height);
 }
 
 // Inflating the map's obstacles
@@ -241,8 +241,8 @@ void Map::paintCell(int i, int j,int r,int g,int b)
 	unsigned int c = (i * width + j) * 4;
 
 	// Set the inflated cell color
-	inflotedPixels[c] = r;
-	inflotedPixels[c + 1] = g;
-	inflotedPixels[c + 2] = b;
-	inflotedPixels[c + 3] = 255;
+	pixels[c] = r;
+	pixels[c + 1] = g;
+	pixels[c + 2] = b;
+	pixels[c + 3] = 255;
 }
