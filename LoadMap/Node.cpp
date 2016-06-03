@@ -8,34 +8,20 @@
 #include "Node.h"
 
 Node::Node() {
-	this->row = 0;
-	this->col = 0;
-	this->occupied = 0;
+	this->occupied = false;
 	this->fValue = INT_MAX;
 	this->hValue = INT_MAX;
 	this->gValue = INT_MAX;
-}
-
-Node::Node(int x, int y)
-{
-	this->row = y;
-	this->col = x;
-	this->occupied = 0;
-	this->fValue = INT_MAX;
-	this->hValue = INT_MAX;
-	this->gValue = INT_MAX;
+	this->parrent(0,0);
 }
 
 Node::Node(const Node& node)
 {
-	this->col = node.col;
-	this->row = node.row;
 	this->occupied = node.occupied;
 	this->fValue = node.fValue;
 	this->hValue = node.hValue;
 	this->gValue = node.gValue;
-	this->parentRow = node.parentRow;
-	this->parentCol = node.parentCol;
+	this->parrent = node.parrent;
 }
 
 Node::~Node() {

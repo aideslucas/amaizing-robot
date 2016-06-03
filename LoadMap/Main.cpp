@@ -20,11 +20,9 @@ int main()
 {
 	// Parameters from parameters file
 	string	mapFile;
-	double 	robotStartX;
-	double 	robotStartY;
+	cordinates robotStartCord;
 	double 	robotStartYAW;
-	double 	goalX;
-	double 	goalY;
+	cordinates goalCord;
 	double 	robotHeight;
 	double 	robotWidth;
 	double 	mapResolutionCM;
@@ -47,12 +45,12 @@ int main()
 		// Get Robot starting position - line contains startLocation: x y yaw
 		getline(parameters,line);
 		istringstream startLocationLine(line);
-		startLocationLine >> lineName >> robotStartX >> robotStartY >> robotStartYAW;
+		startLocationLine >> lineName >> robotStartCord.x >> robotStartCord.y >> robotStartYAW;
 
 		// Get Goal - line contains goal: x y
 		getline(parameters,line);
 		istringstream goalLine(line);
-		goalLine >> lineName >> goalX >> goalY;
+		goalLine >> lineName >> goalCord.x >> goalCord.y;
 
 		// Get Robot Size - line contains robotSize: height width
 		getline(parameters,line);
@@ -89,13 +87,14 @@ int main()
 	// Create a graph from map to run the a star algorithm on it
 	Graph graph(gridResolutionCM);
 	graph.buildGraphFromMap(map);
-	Node start = graph.getNodeFromCordinates(robotStartX, robotStartY);
-	Node goal = graph.getNodeFromCordinates(goalX, goalY);
+
+	Point start = graph.getPointFromCordinates(robotStartCord);
+	Point goal = graph.getPointFromCordinates(goalCord);
 	AStarAlgorithm algo(graph.nodes, start, goal);
-	vector<Node> path = algo.StartAlgorithm();
-	graph.paintPathOnMap(&map, path,0,255,0);
-	graph.paintPathOnMap(&map, start,255,0,0);
-	graph.paintPathOnMap(&map, goal,0,0,255);
+	vector<Point> path = algo.StartAlgorithm();
+	graph.paintPathOnMap(&map, path,255,0,0);
+	//graph.paintPathOnMap(&map, start,255,0,0);
+	//graph.paintPathOnMap(&map, goal,0,0,255);
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");
 

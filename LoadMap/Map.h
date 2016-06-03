@@ -14,6 +14,13 @@
 
 using namespace std;
 
+struct cordinates
+{
+	double x;
+	double y;
+};
+
+
 class Map {
 private:
 	unsigned int width;

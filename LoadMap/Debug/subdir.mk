@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../Main.cpp \
 ../Map.cpp \
 ../Node.cpp \
+../Point.cpp \
 ../Robot.cpp \
 ../lodepng.cpp 
 
@@ -20,6 +21,7 @@ OBJS += \
 ./Main.o \
 ./Map.o \
 ./Node.o \
+./Point.o \
 ./Robot.o \
 ./lodepng.o 
 
@@ -30,6 +32,7 @@ CPP_DEPS += \
 ./Main.d \
 ./Map.d \
 ./Node.d \
+./Point.d \
 ./Robot.d \
 ./lodepng.d 
 

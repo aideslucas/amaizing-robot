@@ -11,12 +11,7 @@
 #include "Node.h"
 #include "Map.h"
 #include "set"
-
-struct cordinates
-{
-	int x;
-	int y;
-};
+#include "Point.h"
 
 class Graph {
 private:
@@ -27,10 +22,10 @@ public:
 	void buildGraphFromMap(const Map map);
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
-	Node getNodeFromCordinates(int x, int y);
-	cordinates getCordinatesFromNode(Node node);
-	void paintPathOnMap(Map *map, vector<Node> path, int r, int g, int b);
-	void paintPathOnMap(Map *map, Node node, int r, int g, int b);
+	Point getPointFromCordinates(cordinates cordinate);
+	cordinates getCordinatesFromPoint(Point point);
+	void paintPathOnMap(Map *map, vector<Point> path, int r, int g, int b);
+	void paintPathOnMap(Map *map, Point point, int r, int g, int b);
 };
 
 #endif /* GRAPH_H_ */

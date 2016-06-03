@@ -43,48 +43,43 @@ void Graph::buildGraphFromMap(const Map map)
 				}
 			}
 
-			this->nodes[y][x].col = x;
-			this->nodes[y][x].row = y;
 			this->nodes[y][x].occupied = isCellOcupied;
 		}
 	}
 }
 
-Node Graph::getNodeFromCordinates(int x, int y)
+Point Graph::getPointFromCordinates(cordinates cordinate)
 {
-	int row = y / resolutionRelation;
-	int col = x / resolutionRelation;
-	return this->nodes[row][col];
+	int row = cordinate.y / resolutionRelation;
+	int col = cordinate.x / resolutionRelation;
+	Point res(row,col);
+	return res;
 }
 
-void Graph::paintPathOnMap(Map *map, vector<Node> path, int r, int g, int b)
+void Graph::paintPathOnMap(Map *map, vector<Point> path, int r, int g, int b)
 {
-	int row,col;
-
 	for (int pathIndex = 0; pathIndex < path.size(); pathIndex++)
 	{
 		paintPathOnMap(map, path[pathIndex],r,g,b);
 	}
 }
 
-void Graph::paintPathOnMap(Map *map, Node node, int r, int g, int b)
+void Graph::paintPathOnMap(Map *map, Point point, int r, int g, int b)
 {
-	int row = node.row;
-	int col = node.col;
-	for (int i = row * resolutionRelation; i < (row * resolutionRelation) + resolutionRelation; i++)
+	for (int y = point.row * resolutionRelation; y < (point.row * resolutionRelation) + resolutionRelation; y++)
 	{
-		for (int j = col * resolutionRelation; j < (col * resolutionRelation) + resolutionRelation; j++)
+		for (int x = point.col * resolutionRelation; x < (point.col * resolutionRelation) + resolutionRelation; x++)
 		{
-			map->paintCell(i,j,r,g,b);
+			map->paintCell(y,x,r,g,b);
 		}
 	}
 }
 
-cordinates Graph::getCordinatesFromNode(Node node)
+cordinates Graph::getCordinatesFromPoint(Point point)
 {
 	cordinates res;
-	res.y = node.row * resolutionRelation;
-	res.x = node.col * resolutionRelation;
+	res.y = (point.row * resolutionRelation) + (resolutionRelation / 2);
+	res.x = (point.col * resolutionRelation) + (resolutionRelation / 2);
 
 	return (res);
 }

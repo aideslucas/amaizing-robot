@@ -1,9 +1,12 @@
-Main.d: ../Main.cpp ../Map.h ../Graph.h ../Node.h ../AStarAlgorithm.h
+Main.d: ../Main.cpp ../Map.h ../Graph.h ../Node.h ../Point.h \
+ ../AStarAlgorithm.h
 
 ../Map.h:
 
 ../Graph.h:
 
 ../Node.h:
+
+../Point.h:
 
 ../AStarAlgorithm.h:
