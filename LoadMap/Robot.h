@@ -9,28 +9,28 @@
 #define ROBOT_H_
 
 #include <libplayerc++/playerc++.h>
+#include "ConfigurationManager.h"
 
 using namespace PlayerCc;
 
 class Robot
 {
- 	PlayerClient* playerClinet;
- 	Position2dProxy* posProxy;
- 	LaserProxy* laserProxy;
-// 	ConfigurationManager* configMgr;
+	PlayerClient* _playerClinet;
+	Position2dProxy* _posProxy;
+	LaserProxy* _laserProxy;
+	ConfigurationManager* _configMgr;
 
 	public:
- 		//Robot constructor
-		Robot(char* IP, int PortNum ,int gridRows);
 
-		// Robot distructor
+		//Robot constructor & destructor
+		Robot(char* IP, int PortNum, ConfigurationManager* Config, int gridRows);
 		virtual ~Robot();
 
 		// Robot position
-		double Xpos;
-		double Ypos;
-		double Yaw;
-		int gridRows;
+		double _Xpos;
+		double _Ypos;
+		double _Yaw;
+		int    _gridRows;
 
 		// Get the robot position
 		double getXpos();

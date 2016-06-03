@@ -11,7 +11,8 @@ Robot.d: ../Robot.cpp ../Robot.h \
  /usr/local/include/player-2.0/libplayerc++/playerc++config.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
- /usr/local/include/player-2.0/libplayerc++/clientproxy.h
+ /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
+ ../ConfigurationManager.h
 
 ../Robot.h:
 
@@ -40,3 +41,5 @@ Robot.d: ../Robot.cpp ../Robot.h \
 /usr/local/include/player-2.0/libplayerc++/playererror.h:
 
 /usr/local/include/player-2.0/libplayerc++/clientproxy.h:
+
+../ConfigurationManager.h:
