@@ -12,16 +12,10 @@
 #include "Map.h"
 #include "set"
 
-struct point
+struct cordinates
 {
-	bool occupied;
-	int row;
-	int col;
-	double fValue;
-	double gValue;
-	double hValue;
-	int cameFromRow;
-	int cameFromCol;
+	int x;
+	int y;
 };
 
 class Graph {
@@ -34,6 +28,7 @@ public:
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
 	Node getNodeFromCordinates(int x, int y);
+	cordinates getCordinatesFromNode(Node node);
 	void paintPathOnMap(Map *map, vector<Node> path, int r, int g, int b);
 	void paintPathOnMap(Map *map, Node node, int r, int g, int b);
 };

@@ -79,3 +79,12 @@ void Graph::paintPathOnMap(Map *map, Node node, int r, int g, int b)
 		}
 	}
 }
+
+cordinates Graph::getCordinatesFromNode(Node node)
+{
+	cordinates res;
+	res.y = node.row * resolutionRelation;
+	res.x = node.col * resolutionRelation;
+
+	return (res);
+}
