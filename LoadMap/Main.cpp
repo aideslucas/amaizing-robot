@@ -13,6 +13,8 @@
 #include <sstream>
 #include <iostream>
 #include "AStarAlgorithm.h"
+#include "ConfigurationManager.h"
+#include "Robot.h"
 
 using namespace std;
 
@@ -97,6 +99,19 @@ int main()
 	//graph.paintPathOnMap(&map, goal,0,0,255);
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");
+
+	// Creating the configuration for the robot
+	ConfigurationManager configMgr("parameters.txt");
+
+	// Create a robot instance
+	Robot myRobot("localhost", 6665, &configMgr, 3);
+
+	// Check Lucatron's movement
+	while (true)
+	{
+		myRobot.setSpeed(0.5, 0.5);
+		myRobot.Read();
+	}
 
 	// Return value
 	return 0;
