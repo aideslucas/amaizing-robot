@@ -35,14 +35,16 @@ Robot::Robot(char* IP, int PortNum, ConfigurationManager* Config, int gridRows)
 	cout << " x " << getXpos() << " y " << getYpos() << "yaw" << getYaw() << endl;
 }
 
+// Read the robot data
 void Robot::Read()
 {
-
+	_playerClinet->Read();
 }
 
+// Set the moving speed
 void Robot::setSpeed(float xSpeed, float angularSpeed)
 {
-
+	_posProxy->SetSpeed(xSpeed, angularSpeed);
 }
 
 bool Robot::rightIsClear()
