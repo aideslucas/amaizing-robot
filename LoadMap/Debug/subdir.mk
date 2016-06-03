@@ -9,7 +9,7 @@ CPP_SRCS += \
 ../Graph.cpp \
 ../Main.cpp \
 ../Map.cpp \
-../Node.cpp \
+../ParticleFilter.cpp \
 ../Point.cpp \
 ../Robot.cpp \
 ../lodepng.cpp 
@@ -20,7 +20,7 @@ OBJS += \
 ./Graph.o \
 ./Main.o \
 ./Map.o \
-./Node.o \
+./ParticleFilter.o \
 ./Point.o \
 ./Robot.o \
 ./lodepng.o 
@@ -31,7 +31,7 @@ CPP_DEPS += \
 ./Graph.d \
 ./Main.d \
 ./Map.d \
-./Node.d \
+./ParticleFilter.d \
 ./Point.d \
 ./Robot.d \
 ./lodepng.d 

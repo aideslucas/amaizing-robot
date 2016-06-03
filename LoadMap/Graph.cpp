@@ -30,25 +30,29 @@ void Graph::buildGraphFromMap(const Map map)
 		this->nodes[index].resize(graphColumns);
 	}
 
-	for (int y = 0; y < graphRows; y ++)
+	Cordinates current;
+
+	for (int row = 0; row < graphRows; row ++)
 	{
-		for (int x = 0; x < graphColumns; x ++)
+		for (int col = 0; col < graphColumns; col ++)
 		{
 			isCellOcupied = false;
-			for (int i = (y * resolutionRelation) ; (i < (y * resolutionRelation) + resolutionRelation) && (!isCellOcupied); i++)
+			for (int i = (row * resolutionRelation) ; (i < (row * resolutionRelation) + resolutionRelation) && (!isCellOcupied); i++)
 			{
-				for (int j = (x * resolutionRelation); (j < (x * resolutionRelation) + resolutionRelation) && (!isCellOcupied); j++)
+				for (int j = (col * resolutionRelation); (j < (col * resolutionRelation) + resolutionRelation) && (!isCellOcupied); j++)
 				{
-					isCellOcupied = map.checkIfInflotedMapCellIsOccupied(i,j);
+					current.y = i;
+					current.x = j;
+					isCellOcupied = map.checkIfInflotedMapCellIsOccupied(current);
 				}
 			}
 
-			this->nodes[y][x].occupied = isCellOcupied;
+			this->nodes[row][col].occupied = isCellOcupied;
 		}
 	}
 }
 
-Point Graph::getPointFromCordinates(cordinates cordinate)
+Point Graph::getPointFromCordinates(Cordinates cordinate)
 {
 	int row = cordinate.y / resolutionRelation;
 	int col = cordinate.x / resolutionRelation;
@@ -66,18 +70,22 @@ void Graph::paintPathOnMap(Map *map, vector<Point> path, int r, int g, int b)
 
 void Graph::paintPathOnMap(Map *map, Point point, int r, int g, int b)
 {
+	Cordinates current;
+
 	for (int y = point.row * resolutionRelation; y < (point.row * resolutionRelation) + resolutionRelation; y++)
 	{
 		for (int x = point.col * resolutionRelation; x < (point.col * resolutionRelation) + resolutionRelation; x++)
 		{
-			map->paintCell(y,x,r,g,b);
+			current.y = y;
+			current.x = x;
+			map->paintCell(current,r,g,b);
 		}
 	}
 }
 
 cordinates Graph::getCordinatesFromPoint(Point point)
 {
-	cordinates res;
+	Cordinates res;
 	res.y = (point.row * resolutionRelation) + (resolutionRelation / 2);
 	res.x = (point.col * resolutionRelation) + (resolutionRelation / 2);
 

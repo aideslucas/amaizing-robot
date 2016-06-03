@@ -35,20 +35,25 @@ void Map::loadMap(const string mapFile)
 	map.resize(height);
 
 	// Going over all of the cells in the map
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
 		// Resizing every cell with the given width
-		map[i].resize(width);
+		map[y].resize(width);
 	}
 
+	Cordinates current;
+
 	// Going over all of the cells to the height of the map
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
 		// Going over all of the cell to the width of the map
-		for (unsigned int j = 0; j < width; j++)
+		for (unsigned int x = 0; x < width; x++)
 		{
+			current.y = y;
+			current.x = x;
+
 			// Checking if the current cell is occupied
-			map[i][j] = checkIfCellIsOccupied(i, j);
+			map[y][x] = checkIfCellIsOccupied(current);
 		}
 	}
 
@@ -78,32 +83,32 @@ void Map::inflateObstacles()
 	inflotedMap.resize(height);
 
 	// Going over the map cells
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
 		// Resizing the each cell's width
-		inflotedMap[i].resize(width);
+		inflotedMap[y].resize(width);
 	}
 
 	// Going over the map cells
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
 		// Going over the map cells
-		for (unsigned int j = 0; j < width; j++)
+		for (unsigned int x = 0; x < width; x++)
 		{
 			// If current cell is occupied
-			if (map[i][j])
+			if (map[y][x])
 			{
 				// Iterating through, according to inflation radius
-				for (int k = -1 * inflationRadius; k <= inflationRadius; k++)
+				for (int dy = -1 * inflationRadius; dy <= inflationRadius; dy++)
 				{
 					// Iterating through, according to inflation radius
-					for (int m = -1 * inflationRadius; m <= inflationRadius; m++)
+					for (int dx = -1 * inflationRadius; dx <= inflationRadius; dx++)
 					{
 						// if the current cell is to be occupied
-						if (i + k > 0 && i + k < height && j + m > 0 && j + m < width)
+						if (y + dy > 0 && y + dy < height && x + dx > 0 && x + dx < width)
 						{
 							// Mark cell as occupied in inflated map
-							inflotedMap[i + k][j + m] = true;
+							inflotedMap[y + dy][x + dx] = true;
 						}
 					}
 				}
@@ -113,15 +118,19 @@ void Map::inflateObstacles()
 
 	// Resizing the map
 	inflotedPixels.resize(width * height * 4);
+	Cordinates current;
 
 	// Going over all of the cells to the height of the map
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
 		// Going over all of the cells to the width of the map
-		for (unsigned int j = 0; j < width; j++)
+		for (unsigned int x = 0; x < width; x++)
 		{
+			current.y = y;
+			current.x = x;
+
 			// Set the current cell occupation
-			setInflotedCellIsOccupied(i, j);
+			setInflotedCellIsOccupied(current);
 		}
 	}
 
@@ -130,10 +139,10 @@ void Map::inflateObstacles()
 }
 
 // Checking if a specific cell is occupied
-bool Map::checkIfCellIsOccupied(int i, int j)
+bool Map::checkIfCellIsOccupied(Cordinates cordinates)
 {
 	// Initializing cell variables
-	int c = (i * width + j) * 4;
+	int c = (cordinates.y * width + cordinates.x) * 4;
 	int r = pixels[c];
 	int g = pixels[c + 1];
 	int b = pixels[c + 2];
@@ -150,9 +159,9 @@ bool Map::checkIfCellIsOccupied(int i, int j)
 }
 
 // Checking if a specific cell of the infloted map is occupied
-bool Map::checkIfInflotedMapCellIsOccupied(int i, int j) const
+bool Map::checkIfInflotedMapCellIsOccupied(Cordinates cordinates) const
 {
-	return this->inflotedMap[i][j];
+	return this->inflotedMap[cordinates.y][cordinates.x];
 }
 
 unsigned int Map::getWidth() const
@@ -171,11 +180,11 @@ double Map::getMapResolution() const
 }
 
 // Check if a cell in the inflated map is occupied
-void Map::setInflotedCellIsOccupied(int i, int j)
+void Map::setInflotedCellIsOccupied(Cordinates cordinates)
 {
 	// Initialize color and cell
-	int c = (i * width + j) * 4;
-	int color = (inflotedMap[i][j] ? 0 : 255);
+	int c = (cordinates.y * width + cordinates.x) * 4;
+	int color = (inflotedMap[cordinates.y][cordinates.x] ? 0 : 255);
 
 	// Set the inflated cell color
 	inflotedPixels[c] = color;
@@ -188,13 +197,13 @@ void Map::setInflotedCellIsOccupied(int i, int j)
 void Map::printMap() const
 {
 	// Going over all of the cells to the height of the map
- 	for (unsigned int i = 0; i < height; i++)
+ 	for (unsigned int y = 0; y < height; y++)
 	{
  		// Going over all of the cells to the width of the map
-		for (unsigned int j = 0; j < width; j++)
+		for (unsigned int x = 0; x < width; x++)
 		{
 			// Print map with occupied or unoccupied cells
-			cout << (map[i][j] ? "*" : " ");
+			cout << (map[y][x] ? "*" : " ");
 		}
 
 		// Go down one line
@@ -206,13 +215,13 @@ void Map::printMap() const
 void Map::printInflotedMap() const {
 
 	// Going over all of the cells to the height of the map
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
  		// Going over all of the cells to the width of the map
-		for (unsigned int j = 0; j < width; j++)
+		for (unsigned int x = 0; x < width; x++)
 		{
 			// Print map with occupied or unoccupied cells
-			cout << (inflotedMap[i][j] ? "*" : " ");
+			cout << (inflotedMap[y][x] ? "*" : " ");
 		}
 
 		// Go down one line
@@ -223,10 +232,10 @@ void Map::printInflotedMap() const {
 Map::~Map()
 {
 	// Going over all of the cells to the height of the map
-	for (unsigned int i = 0; i < height; i++)
+	for (unsigned int y = 0; y < height; y++)
 	{
 		// Going over all of the cells to the width of the map
-		for (unsigned int j = 0; j < width; j++)
+		for (unsigned int x = 0; x < width; x++)
 		{
 			// Clear map elements
 			map.clear();
@@ -235,10 +244,10 @@ Map::~Map()
 }
 
 // Check if a cell in the inflated map is occupied
-void Map::paintCell(int i, int j,int r,int g,int b)
+void Map::paintCell(Cordinates cordinates, int r, int g, int b)
 {
 	// Initialize color and cell
-	unsigned int c = (i * width + j) * 4;
+	unsigned int c = (cordinates.y * width + cordinates.x) * 4;
 
 	// Set the inflated cell color
 	pixels[c] = r;

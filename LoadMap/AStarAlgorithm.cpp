@@ -26,6 +26,8 @@ void AStarAlgorithm::fillHeuristic()
 			{
 				Point current(row,col);
 				graph[row][col].hValue = estimatedHeuristicCost(current,goal);
+				graph[row][col].gValue = INT_MAX;
+				graph[row][col].fValue = INT_MAX;
 			}
 		}
 	}

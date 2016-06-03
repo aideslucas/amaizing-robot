@@ -20,9 +20,9 @@ int main()
 {
 	// Parameters from parameters file
 	string	mapFile;
-	cordinates robotStartCord;
+	Cordinates robotStartCord;
 	double 	robotStartYAW;
-	cordinates goalCord;
+	Cordinates goalCord;
 	double 	robotHeight;
 	double 	robotWidth;
 	double 	mapResolutionCM;

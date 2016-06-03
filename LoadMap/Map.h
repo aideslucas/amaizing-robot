@@ -14,11 +14,12 @@
 
 using namespace std;
 
-struct cordinates
+typedef struct cordinates
 {
 	double x;
 	double y;
-};
+}
+Cordinates;
 
 
 class Map {
@@ -33,10 +34,10 @@ private:
 	double robotHeight;
 	double robotWidth;
 
-	void setInflotedCellIsOccupied(int i, int j);
+	void setInflotedCellIsOccupied(Cordinates cordinates);
 	void printMap() const;
 	void printInflotedMap() const;
-	bool checkIfCellIsOccupied(int i, int j);
+	bool checkIfCellIsOccupied(Cordinates cordinates);
 
 public:
 	Map(double mapResolution, double robotHeight, double robotWidth);
@@ -47,8 +48,8 @@ public:
 	unsigned int getWidth() const;
 	unsigned int getHeight() const;
 	double getMapResolution() const;
-	bool checkIfInflotedMapCellIsOccupied(int i, int j) const;
-	void paintCell(int i, int j, int r, int g, int b);
+	bool checkIfInflotedMapCellIsOccupied(Cordinates cordinates) const;
+	void paintCell(Cordinates cordinates, int r, int g, int b);
 };
 
 #endif /* MAP_H_ */
