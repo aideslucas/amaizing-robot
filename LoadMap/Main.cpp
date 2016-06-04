@@ -15,6 +15,7 @@
 #include "AStarAlgorithm.h"
 #include "ConfigurationManager.h"
 #include "Robot.h"
+#include "Cell.h"
 
 using namespace std;
 
@@ -22,9 +23,9 @@ int main()
 {
 	// Parameters from parameters file
 	string	mapFile;
-	Point robotStartCord;
+	Point robotStartPoint;
 	double 	robotStartYAW;
-	Point goalCord;
+	Point goalPoint;
 	double 	robotHeight;
 	double 	robotWidth;
 	double 	mapResolutionCM;
@@ -47,12 +48,12 @@ int main()
 		// Get Robot starting position - line contains startLocation: x y yaw
 		getline(parameters,line);
 		istringstream startLocationLine(line);
-		startLocationLine >> lineName >> robotStartCord.x >> robotStartCord.y >> robotStartYAW;
+		startLocationLine >> lineName >> robotStartPoint.x >> robotStartPoint.y >> robotStartYAW;
 
 		// Get Goal - line contains goal: x y
 		getline(parameters,line);
 		istringstream goalLine(line);
-		goalLine >> lineName >> goalCord.x >> goalCord.y;
+		goalLine >> lineName >> goalPoint.x >> goalPoint.y;
 
 		// Get Robot Size - line contains robotSize: height width
 		getline(parameters,line);
@@ -90,10 +91,10 @@ int main()
 	Graph graph(gridResolutionCM);
 	graph.buildGraphFromMap(map);
 
-	Point start = graph.getPointFromCordinates(robotStartCord);
-	Point goal = graph.getPointFromCordinates(goalCord);
+	Cell start = graph.getCellFromPoint(robotStartPoint);
+	Cell goal = graph.getCellFromPoint(goalPoint);
 	AStarAlgorithm algo(graph.nodes, start, goal);
-	vector<Point> path = algo.StartAlgorithm();
+	vector<Cell> path = algo.StartAlgorithm();
 	graph.paintPathOnMap(&map, path,255,0,0);
 	//graph.paintPathOnMap(&map, start,255,0,0);
 	//graph.paintPathOnMap(&map, goal,0,0,255);
