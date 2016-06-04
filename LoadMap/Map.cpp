@@ -41,7 +41,7 @@ void Map::loadMap(const string mapFile)
 		map[y].resize(width);
 	}
 
-	Cordinates current;
+	Point current;
 
 	// Going over all of the cells to the height of the map
 	for (unsigned int y = 0; y < height; y++)
@@ -118,7 +118,7 @@ void Map::inflateObstacles()
 
 	// Resizing the map
 	inflotedPixels.resize(width * height * 4);
-	Cordinates current;
+	Point current;
 
 	// Going over all of the cells to the height of the map
 	for (unsigned int y = 0; y < height; y++)
@@ -139,10 +139,10 @@ void Map::inflateObstacles()
 }
 
 // Checking if a specific cell is occupied
-bool Map::checkIfCellIsOccupied(Cordinates cordinates)
+bool Map::checkIfCellIsOccupied(Point point)
 {
 	// Initializing cell variables
-	int c = (cordinates.y * width + cordinates.x) * 4;
+	int c = (point.y * width + point.x) * 4;
 	int r = pixels[c];
 	int g = pixels[c + 1];
 	int b = pixels[c + 2];
@@ -159,9 +159,9 @@ bool Map::checkIfCellIsOccupied(Cordinates cordinates)
 }
 
 // Checking if a specific cell of the infloted map is occupied
-bool Map::checkIfInflotedMapCellIsOccupied(Cordinates cordinates) const
+bool Map::checkIfInflotedMapCellIsOccupied(Point point) const
 {
-	return this->inflotedMap[cordinates.y][cordinates.x];
+	return this->inflotedMap[point.y][point.x];
 }
 
 unsigned int Map::getWidth() const
@@ -180,11 +180,11 @@ double Map::getMapResolution() const
 }
 
 // Check if a cell in the inflated map is occupied
-void Map::setInflotedCellIsOccupied(Cordinates cordinates)
+void Map::setInflotedCellIsOccupied(Point point)
 {
 	// Initialize color and cell
-	int c = (cordinates.y * width + cordinates.x) * 4;
-	int color = (inflotedMap[cordinates.y][cordinates.x] ? 0 : 255);
+	int c = (point.y * width + point.x) * 4;
+	int color = (inflotedMap[point.y][point.x] ? 0 : 255);
 
 	// Set the inflated cell color
 	inflotedPixels[c] = color;
@@ -244,10 +244,10 @@ Map::~Map()
 }
 
 // Check if a cell in the inflated map is occupied
-void Map::paintCell(Cordinates cordinates, int r, int g, int b)
+void Map::paintCell(Point point, int r, int g, int b)
 {
 	// Initialize color and cell
-	unsigned int c = (cordinates.y * width + cordinates.x) * 4;
+	unsigned int c = (point.y * width + point.x) * 4;
 
 	// Set the inflated cell color
 	pixels[c] = r;

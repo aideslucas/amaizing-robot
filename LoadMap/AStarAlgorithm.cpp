@@ -7,7 +7,7 @@
 
 #include "AStarAlgorithm.h"
 
-AStarAlgorithm::AStarAlgorithm(vector<vector<Node> > graph, Point start, Point goal) {
+AStarAlgorithm::AStarAlgorithm(vector<vector<Node> > graph, Cell start, Cell goal) {
 	this->graph = graph;
 	this->goal = goal;
 	this->start = start;
@@ -24,7 +24,7 @@ void AStarAlgorithm::fillHeuristic()
 		{
 			if (!graph[row][col].occupied)
 			{
-				Point current(row,col);
+				Cell current(row,col);
 				graph[row][col].hValue = estimatedHeuristicCost(current,goal);
 				graph[row][col].gValue = INT_MAX;
 				graph[row][col].fValue = INT_MAX;
@@ -33,7 +33,7 @@ void AStarAlgorithm::fillHeuristic()
 	}
 }
 
-vector<Point> AStarAlgorithm::StartAlgorithm()
+vector<Cell> AStarAlgorithm::StartAlgorithm()
 {
 	fillHeuristic();
 	closedSet.clear();
@@ -46,7 +46,7 @@ vector<Point> AStarAlgorithm::StartAlgorithm()
 
 	while (!openSet.empty())
 	{
-		Point current = getLowestFValue();
+		Cell current = getLowestFValue();
 		if (current == goal)
 		{
 			reconstructPath();
@@ -63,7 +63,7 @@ vector<Point> AStarAlgorithm::StartAlgorithm()
 				if (row >= 0 && row < graph.size() &&
 					col >= 0 && col < graph[0].size() && !graph[row][col].occupied)
 				{
-					Point neighbour(row,col);
+					Cell neighbour(row,col);
 
 					if (setContains(closedSet, neighbour))
 					{
@@ -93,11 +93,11 @@ vector<Point> AStarAlgorithm::StartAlgorithm()
 	return totalPath;
 }
 
-bool AStarAlgorithm::setContains(set<Point> nodeSet, Point current)
+bool AStarAlgorithm::setContains(set<Cell> nodeSet, Cell current)
 {
 	if (!nodeSet.empty())
 	{
-		for (set<Point>::iterator index = nodeSet.begin(); index != nodeSet.end(); index++)
+		for (set<Cell>::iterator index = nodeSet.begin(); index != nodeSet.end(); index++)
 		{
 			if (*index == current)
 			{
@@ -109,7 +109,7 @@ bool AStarAlgorithm::setContains(set<Point> nodeSet, Point current)
 	return false;
 }
 
-double AStarAlgorithm::getGValue(Point from, Point to)
+double AStarAlgorithm::getGValue(Cell from, Cell to)
 {
 	if((from.col != to.col) && ( from.row != to.row))
 	{
@@ -121,11 +121,11 @@ double AStarAlgorithm::getGValue(Point from, Point to)
 	}
 }
 
-Point AStarAlgorithm::getLowestFValue()
+Cell AStarAlgorithm::getLowestFValue()
 {
-	set<Point>::iterator index = openSet.begin();
-	Point lowest = *index;
-	Point current;
+	set<Cell>::iterator index = openSet.begin();
+	Cell lowest = *index;
+	Cell current;
 
 	for (index = openSet.begin(); index != openSet.end(); index++)
 	{
@@ -140,7 +140,7 @@ Point AStarAlgorithm::getLowestFValue()
 	return lowest;
 }
 
-double AStarAlgorithm::estimatedHeuristicCost(Point from, Point to)
+double AStarAlgorithm::estimatedHeuristicCost(Cell from, Cell to)
 {
 	int dx = from.col - to.col;
 	int dy = from.row - to.row;
@@ -154,7 +154,7 @@ void AStarAlgorithm::reconstructPath()
 {
 	int i = 1;
 
-	Point current = goal;
+	Cell current = goal;
 	while (current != start)
 	{
 		i++;

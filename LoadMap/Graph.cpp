@@ -30,7 +30,7 @@ void Graph::buildGraphFromMap(const Map map)
 		this->nodes[index].resize(graphColumns);
 	}
 
-	Cordinates current;
+	Point current;
 
 	for (int row = 0; row < graphRows; row ++)
 	{
@@ -52,15 +52,15 @@ void Graph::buildGraphFromMap(const Map map)
 	}
 }
 
-Point Graph::getPointFromCordinates(Cordinates cordinate)
+Cell Graph::getCellFromPoint(Point point)
 {
-	int row = cordinate.y / resolutionRelation;
-	int col = cordinate.x / resolutionRelation;
-	Point res(row,col);
-	return res;
+	int row = point.y / resolutionRelation;
+	int col = point.x / resolutionRelation;
+	Cell cell(row,col);
+	return cell;
 }
 
-void Graph::paintPathOnMap(Map *map, vector<Point> path, int r, int g, int b)
+void Graph::paintPathOnMap(Map *map, vector<Cell> path, int r, int g, int b)
 {
 	for (int pathIndex = 0; pathIndex < path.size(); pathIndex++)
 	{
@@ -68,9 +68,9 @@ void Graph::paintPathOnMap(Map *map, vector<Point> path, int r, int g, int b)
 	}
 }
 
-void Graph::paintPathOnMap(Map *map, Point point, int r, int g, int b)
+void Graph::paintPathOnMap(Map *map, Cell point, int r, int g, int b)
 {
-	Cordinates current;
+	Point current;
 
 	for (int y = point.row * resolutionRelation; y < (point.row * resolutionRelation) + resolutionRelation; y++)
 	{
@@ -83,11 +83,11 @@ void Graph::paintPathOnMap(Map *map, Point point, int r, int g, int b)
 	}
 }
 
-cordinates Graph::getCordinatesFromPoint(Point point)
+Point Graph::getPointFromCell(Cell cell)
 {
-	Cordinates res;
-	res.y = (point.row * resolutionRelation) + (resolutionRelation / 2);
-	res.x = (point.col * resolutionRelation) + (resolutionRelation / 2);
+	Point point;
+	point.y = (cell.row * resolutionRelation) + (resolutionRelation / 2);
+	point.x = (cell.col * resolutionRelation) + (resolutionRelation / 2);
 
-	return (res);
+	return (point);
 }

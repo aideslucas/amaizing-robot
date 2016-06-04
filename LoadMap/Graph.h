@@ -10,7 +10,7 @@
 
 #include "Map.h"
 #include "set"
-#include "Point.h"
+#include "Cell.h"
 
 typedef struct node
 {
@@ -18,7 +18,7 @@ typedef struct node
 	double fValue;
 	double gValue;
 	double hValue;
-	Point parrent;
+	Cell parrent;
 }
 Node;
 
@@ -31,10 +31,10 @@ public:
 	void buildGraphFromMap(const Map map);
 	Graph(double graphResolutionInCM);
 	virtual ~Graph();
-	Point getPointFromCordinates(Cordinates cordinate);
-	Cordinates getCordinatesFromPoint(Point point);
-	void paintPathOnMap(Map *map, vector<Point> path, int r, int g, int b);
-	void paintPathOnMap(Map *map, Point point, int r, int g, int b);
+	Cell getCellFromPoint(Point point);
+	Point getPointFromCell(Cell cell);
+	void paintPathOnMap(Map *map, vector<Cell> path, int r, int g, int b);
+	void paintPathOnMap(Map *map, Cell cell, int r, int g, int b);
 };
 
 #endif /* GRAPH_H_ */

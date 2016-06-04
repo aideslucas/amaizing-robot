@@ -5,34 +5,34 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../AStarAlgorithm.cpp \
+../Cell.cpp \
 ../ConfigurationManager.cpp \
 ../Graph.cpp \
 ../Main.cpp \
 ../Map.cpp \
 ../ParticleFilter.cpp \
-../Point.cpp \
 ../Robot.cpp \
 ../lodepng.cpp 
 
 OBJS += \
 ./AStarAlgorithm.o \
+./Cell.o \
 ./ConfigurationManager.o \
 ./Graph.o \
 ./Main.o \
 ./Map.o \
 ./ParticleFilter.o \
-./Point.o \
 ./Robot.o \
 ./lodepng.o 
 
 CPP_DEPS += \
 ./AStarAlgorithm.d \
+./Cell.d \
 ./ConfigurationManager.d \
 ./Graph.d \
 ./Main.d \
 ./Map.d \
 ./ParticleFilter.d \
-./Point.d \
 ./Robot.d \
 ./lodepng.d 
 

@@ -11,7 +11,7 @@
 
 typedef struct particle
 {
-	cordinates cordinate;
+	point cordinate;
 	double weight;
 	char state;
 }
