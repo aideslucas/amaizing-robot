@@ -12,6 +12,9 @@
 #include "Graph.h"
 #include "math.h"
 
+using namespace std;
+#include <iostream>
+
 typedef struct waypoint
 {
 	Point point;

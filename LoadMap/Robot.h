@@ -18,6 +18,7 @@ class Robot
 	PlayerClient* _playerClinet;
 	Position2dProxy* _posProxy;
 	LaserProxy* _laserProxy;
+	SonarProxy* _sonarProxy;
 	ConfigurationManager* _configMgr;
 
 	public:
@@ -54,6 +55,7 @@ class Robot
 		LaserProxy* getLaser();
 
 		void drive(int configMgrToMove);
+		void move(ConfigurationManager currConfig);
 		void setSpeed(float xSpeed, float angularSpeed);
 		void Read();
 };
