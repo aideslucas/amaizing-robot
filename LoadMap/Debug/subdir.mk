@@ -12,6 +12,7 @@ CPP_SRCS += \
 ../Map.cpp \
 ../ParticleFilter.cpp \
 ../Robot.cpp \
+../WalkPath.cpp \
 ../Waypoint.cpp \
 ../WaypointManager.cpp \
 ../lodepng.cpp 
@@ -25,6 +26,7 @@ OBJS += \
 ./Map.o \
 ./ParticleFilter.o \
 ./Robot.o \
+./WalkPath.o \
 ./Waypoint.o \
 ./WaypointManager.o \
 ./lodepng.o 
@@ -38,6 +40,7 @@ CPP_DEPS += \
 ./Map.d \
 ./ParticleFilter.d \
 ./Robot.d \
+./WalkPath.d \
 ./Waypoint.d \
 ./WaypointManager.d \
 ./lodepng.d 
