@@ -1,5 +1,4 @@
-ParticleFilter.d: ../ParticleFilter.cpp ../ParticleFilter.h ../Particle.h \
- ../Map.h ../Robot.h \
+Particle.d: ../Particle.cpp ../Particle.h ../Map.h ../Robot.h \
  /usr/local/include/player-2.0/libplayerc++/playerc++.h \
  /usr/local/include/player-2.0/libplayerc/playerc.h \
  /usr/local/include/player-2.0/libplayercore/player.h \
@@ -14,8 +13,6 @@ ParticleFilter.d: ../ParticleFilter.cpp ../ParticleFilter.h ../Particle.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
  /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
  ../ConfigurationManager.h
-
-../ParticleFilter.h:
 
 ../Particle.h:
 

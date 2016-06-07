@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../Graph.cpp \
 ../Main.cpp \
 ../Map.cpp \
+../Particle.cpp \
 ../ParticleFilter.cpp \
 ../Robot.cpp \
 ../Waypoint.cpp \
@@ -23,6 +24,7 @@ OBJS += \
 ./Graph.o \
 ./Main.o \
 ./Map.o \
+./Particle.o \
 ./ParticleFilter.o \
 ./Robot.o \
 ./Waypoint.o \
@@ -36,6 +38,7 @@ CPP_DEPS += \
 ./Graph.d \
 ./Main.d \
 ./Map.d \
+./Particle.d \
 ./ParticleFilter.d \
 ./Robot.d \
 ./Waypoint.d \
