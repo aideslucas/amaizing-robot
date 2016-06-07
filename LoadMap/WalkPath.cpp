@@ -7,9 +7,9 @@
 
 #include "WalkPath.h"
 
-WalkPath::WalkPath(Robot* myRobot, ConfigurationManager* configMgr, WaypointManager* wayPointMgr)
+WalkPath::WalkPath(Robot* myRobot, ConfigurationManager* configMgr, WaypointManager* wayPointMgr, ParticleFilter* pf)
 {
-	//	_localization_manager = l_manager;
+	_pf = pf;
 	//	_curr = pln->getStartPoint();
 	_Robot = myRobot;
 	_wayPointsMgr = wayPointMgr;
@@ -60,6 +60,8 @@ void WalkPath::Walk()
 			// Do the current behavior's action
 //			_curr->action();
 
+			_Robot->setSpeed(0.5,0.1);
+
 			_Robot->Read();
 
 			// Gets the position of the robot after read
@@ -72,8 +74,13 @@ void WalkPath::Walk()
 			double deltaTeta = currYaw	 - Yaw;
 
 			// Update particles
-//			_localization_manager->update(x_Coordinate, y_Coordinate, dTeta,
-//										  deltaX, deltaY, deltaTeta, _robot->getLaser());
+			Point point;
+			point.x = Xlocation;
+			point.y = Ylocation;
+			Point deltaPoint;
+			deltaPoint.x = deltaX;
+			deltaPoint.y = deltaY;
+			_pf->update(point, Yaw, deltaPoint, deltaTeta, _Robot->getLaser());
 
 			Xlocation = currX;
 			Ylocation = currY;

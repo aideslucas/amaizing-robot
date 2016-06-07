@@ -13,7 +13,8 @@ Main.d: ../Main.cpp ../Map.h ../Graph.h ../Cell.h ../AStarAlgorithm.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
  /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
- ../WaypointManager.h ../Waypoint.h
+ ../WaypointManager.h ../Waypoint.h ../WalkPath.h ../ParticleFilter.h \
+ ../Particle.h
 
 ../Map.h:
 
@@ -56,3 +57,9 @@ Main.d: ../Main.cpp ../Map.h ../Graph.h ../Cell.h ../AStarAlgorithm.h \
 ../WaypointManager.h:
 
 ../Waypoint.h:
+
+../WalkPath.h:
+
+../ParticleFilter.h:
+
+../Particle.h:

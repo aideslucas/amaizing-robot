@@ -1,4 +1,4 @@
-WalkPath.d: ../WalkPath.cpp ../WalkPath.h ../Robot.h \
+main.d: ../main.cpp \
  /usr/local/include/player-2.0/libplayerc++/playerc++.h \
  /usr/local/include/player-2.0/libplayerc/playerc.h \
  /usr/local/include/player-2.0/libplayercore/player.h \
@@ -11,13 +11,7 @@ WalkPath.d: ../WalkPath.cpp ../WalkPath.h ../Robot.h \
  /usr/local/include/player-2.0/libplayerc++/playerc++config.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
- /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
- ../ConfigurationManager.h ../Map.h ../WaypointManager.h ../Graph.h \
- ../Cell.h ../Waypoint.h ../ParticleFilter.h ../Particle.h
-
-../WalkPath.h:
-
-../Robot.h:
+ /usr/local/include/player-2.0/libplayerc++/clientproxy.h
 
 /usr/local/include/player-2.0/libplayerc++/playerc++.h:
 
@@ -44,19 +38,3 @@ WalkPath.d: ../WalkPath.cpp ../WalkPath.h ../Robot.h \
 /usr/local/include/player-2.0/libplayerc++/playererror.h:
 
 /usr/local/include/player-2.0/libplayerc++/clientproxy.h:
-
-../ConfigurationManager.h:
-
-../Map.h:
-
-../WaypointManager.h:
-
-../Graph.h:
-
-../Cell.h:
-
-../Waypoint.h:
-
-../ParticleFilter.h:
-
-../Particle.h:

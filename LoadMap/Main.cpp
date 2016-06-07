@@ -17,6 +17,8 @@
 #include "Robot.h"
 #include "Cell.h"
 #include "WaypointManager.h"
+#include "WalkPath.h"
+#include "ParticleFilter.h"
 
 using namespace std;
 
@@ -47,15 +49,22 @@ int main()
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");
 
+
 	// Create a robot instance
-	Robot myRobot("localhost", 6665, &configMgr, 3);
+	Robot myRobot("localhost", 6665, &configMgr, graph.nodes.size());
+
+	// Create a waypoint instance
+	WaypointManager wpMgr(path, configMgr.gridResolutionCM, configMgr.mapResolutionCM);
+
+	wpMgr.buildWaypointVector(3);
+
+	ParticleFilter pf;
 
 	// Check Lucatron's movement
-	while (true)
-	{
-		myRobot.setSpeed(0.5, 0.5);
-		myRobot.Read();
-	}
+	WalkPath wpth(&myRobot, &configMgr, &wpMgr, &pf);
+
+	// Start walking the path
+	wpth.Walk();
 
 	// Return value
 	return 0;
