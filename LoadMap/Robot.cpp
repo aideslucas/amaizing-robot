@@ -153,7 +153,7 @@ bool Robot::checkRange(int nStart, int nEnd)
 
 	for (int i = nStart; (i <= nEnd) && (is_Good); i++)
  	{
- 		is_Good = (this->_laserProxy->GetRange(i) > MINIUM_ALLOWED_DISTANCE);
+ 		//is_Good = (this->_laserProxy->GetRange(i) > MINIUM_ALLOWED_DISTANCE);
  	}
 
  	return (is_Good);

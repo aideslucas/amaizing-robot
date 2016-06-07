@@ -11,16 +11,11 @@
 #include <set>
 #include "Graph.h"
 #include "math.h"
+#include "Waypoint.h"
 
 using namespace std;
 #include <iostream>
 
-typedef struct waypoint
-{
-	Point point;
-	double yaw;
-}
-Waypoint;
 
 class WaypointManager {
 public:
