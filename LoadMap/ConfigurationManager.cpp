@@ -31,12 +31,12 @@ ConfigurationManager::ConfigurationManager(const char* configurationPath)
 		// Get Robot starting position - line contains startLocation: x y yaw
 		getline(parameters,line);
 		istringstream startLocationLine(line);
-		startLocationLine >> lineName >> robotStartX >> robotStartY >> robotStartYAW;
+		startLocationLine >> lineName >> robotStart.x >> robotStart.y >> robotStartYAW;
 
 		// Get Goal - line contains goal: x y
 		getline(parameters,line);
 		istringstream goalLine(line);
-		goalLine >> lineName >> goalX >> goalY;
+		goalLine >> lineName >> goal.x >> goal.y;
 
 		// Get Robot Size - line contains robotSize: height width
 		getline(parameters,line);

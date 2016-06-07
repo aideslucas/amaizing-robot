@@ -19,6 +19,7 @@
 #define MINIUM_ALLOWED_DISTANCE 	0.25
 
 #include <string>
+#include "Map.h"
 
 using namespace std;
 
@@ -45,11 +46,9 @@ class ConfigurationManager
 
 		// Luac
 		string	mapFile;
-		double 	robotStartX;
-		double 	robotStartY;
+		Point 	robotStart;
 		double 	robotStartYAW;
-		double 	goalX;
-		double 	goalY;
+		Point 	goal;
 		double 	robotHeight;
 		double 	robotWidth;
 		double 	mapResolutionCM;

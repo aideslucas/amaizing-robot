@@ -21,78 +21,23 @@ using namespace std;
 
 int main()
 {
-	// Parameters from parameters file
-	string	mapFile;
-	Point robotStartPoint;
-	double 	robotStartYAW;
-	Point goalPoint;
-	double 	robotHeight;
-	double 	robotWidth;
-	double 	mapResolutionCM;
-	double 	gridResolutionCM;
-
-	// Open parameters file
-	ifstream parameters;
-	parameters.open("parameters.txt");
-
-	if (parameters.is_open())
-	{
-		string line;
-		string lineName;
-
-		// Get Map File - line contains map: path
-		getline(parameters,line);
-		std::istringstream mapLine(line);
-		mapLine >> lineName >> mapFile;
-
-		// Get Robot starting position - line contains startLocation: x y yaw
-		getline(parameters,line);
-		istringstream startLocationLine(line);
-		startLocationLine >> lineName >> robotStartPoint.x >> robotStartPoint.y >> robotStartYAW;
-
-		// Get Goal - line contains goal: x y
-		getline(parameters,line);
-		istringstream goalLine(line);
-		goalLine >> lineName >> goalPoint.x >> goalPoint.y;
-
-		// Get Robot Size - line contains robotSize: height width
-		getline(parameters,line);
-		istringstream sizeLine(line);
-		sizeLine >> lineName >> robotHeight >> robotWidth;
-
-		// Get Map resolution in CM - line contains MapResolutionCM: resolution
-		getline(parameters,line);
-		istringstream mapResolutionLine(line);
-		mapResolutionLine >> lineName >> mapResolutionCM;
-
-		// Get Grid resolution in CM - line contains GridResolutionCM: resolution
-		getline(parameters,line);
-		istringstream gridResolutionLine(line);
-		gridResolutionLine >> lineName >> gridResolutionCM;
-
-		parameters.close();
-	}
-	else
-	{
-		cout << "Unable to open file";
-		return 0;
-	}
+	ConfigurationManager configMgr("parameters.txt");
 
 	// Creating a map object with the given parameters
-	Map map(mapResolutionCM, robotHeight, robotWidth);
+	Map map(configMgr.mapResolutionCM, configMgr.robotHeight, configMgr.robotWidth);
 
 	// Loading map
-	map.loadMap(mapFile);
+	map.loadMap(configMgr.mapFile);
 
 	// Inflate all of the obstacles in the give map
 	map.inflateObstacles();
 
 	// Create a graph from map to run the a star algorithm on it
-	Graph graph(gridResolutionCM);
+	Graph graph(configMgr.gridResolutionCM);
 	graph.buildGraphFromMap(map);
 
-	Cell start = graph.getCellFromPoint(robotStartPoint);
-	Cell goal = graph.getCellFromPoint(goalPoint);
+	Cell start = graph.getCellFromPoint(configMgr.robotStart);
+	Cell goal = graph.getCellFromPoint(configMgr.goal);
 	AStarAlgorithm algo(graph.nodes, start, goal);
 	vector<Cell> path = algo.StartAlgorithm();
 	graph.paintPathOnMap(&map, path,255,0,0);
@@ -100,9 +45,6 @@ int main()
 	//graph.paintPathOnMap(&map, goal,0,0,255);
 	// Save the new inflated map the a new file
 	map.saveMap("infloatedMap.png");
-
-	// Creating the configuration for the robot
-	ConfigurationManager configMgr("parameters.txt");
 
 	// Create a robot instance
 	Robot myRobot("localhost", 6665, &configMgr, 3);

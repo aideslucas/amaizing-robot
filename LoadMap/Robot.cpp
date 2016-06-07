@@ -34,16 +34,16 @@ Robot::Robot(char* IP, int PortNum, ConfigurationManager* Config, int gridRows)
 	cout << "X: " << _posProxy->GetXPos() << " Y: " << _posProxy->GetYPos() << " Yaw: " << _posProxy->GetYaw() << endl;
 
 	// Setting the location data
-	_posProxy->SetOdometry(((double)Config->robotStartX / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
-						   ((_gridRows / _configMgr->gridResolutionCM) - (((double)Config->robotStartY) / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/
+	_posProxy->SetOdometry(((double)Config->robotStart.x / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
+						   ((_gridRows / _configMgr->gridResolutionCM) - (((double)Config->robotStart.y) / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/
 					  	    (_configMgr->gridResolutionCM))) ,Config->robotStartYAW*M_PI/180);
 
 	// Out put the location data
 	cout << " x " << getXpos() << " y " << getYpos() << "yaw" << getYaw() << endl;
 
 	// Setting the location data
-	_posProxy->SetOdometry(((double)Config->robotStartX / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
-						   ((_gridRows / _configMgr->gridResolutionCM) - (((double)Config->robotStartY) / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/
+	_posProxy->SetOdometry(((double)Config->robotStart.x / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
+						   ((_gridRows / _configMgr->gridResolutionCM) - (((double)Config->robotStart.y) / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/
 							(_configMgr->gridResolutionCM))),Config->robotStartYAW*M_PI/180);
 
 	// Out put the location data

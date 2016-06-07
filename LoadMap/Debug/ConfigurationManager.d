@@ -1,4 +1,6 @@
 ConfigurationManager.d: ../ConfigurationManager.cpp \
- ../ConfigurationManager.h
+ ../ConfigurationManager.h ../Map.h
 
 ../ConfigurationManager.h:
+
+../Map.h:
