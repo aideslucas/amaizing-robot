@@ -16,6 +16,7 @@
 #include "ConfigurationManager.h"
 #include "Robot.h"
 #include "Cell.h"
+#include "WaypointManager.h"
 
 using namespace std;
 

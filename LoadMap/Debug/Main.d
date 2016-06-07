@@ -12,7 +12,8 @@ Main.d: ../Main.cpp ../Map.h ../Graph.h ../Cell.h ../AStarAlgorithm.h \
  /usr/local/include/player-2.0/libplayerc++/playerc++config.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
- /usr/local/include/player-2.0/libplayerc++/clientproxy.h
+ /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
+ ../WaypointManager.h ../Waypoint.h
 
 ../Map.h:
 
@@ -51,3 +52,7 @@ Main.d: ../Main.cpp ../Map.h ../Graph.h ../Cell.h ../AStarAlgorithm.h \
 /usr/local/include/player-2.0/libplayerc++/playererror.h:
 
 /usr/local/include/player-2.0/libplayerc++/clientproxy.h:
+
+../WaypointManager.h:
+
+../Waypoint.h:
