@@ -12,16 +12,19 @@
 #include "WaypointManager.h"
 #include "Waypoint.h"
 #include "ParticleFilter.h"
+#include "Path.h"
+
 class WalkPath
 {
-//	Behavior* _curr;
+	Actions* _action;
 //	LocalizationManager* _localization_manager;
 	Robot* _Robot;
 	ConfigurationManager* _configMgr;
 	WaypointManager* _wayPointsMgr;
 	ParticleFilter* _pf;
+
 	public:
-		WalkPath(Robot* myRobot, ConfigurationManager* configMgr, WaypointManager* wayPointsMgr, ParticleFilter* pf);
+		WalkPath(Robot* myRobot, ConfigurationManager* configMgr, WaypointManager* wayPointsMgr, ParticleFilter* pf, Path* robotPath);
 		virtual ~WalkPath();
 		void Walk();
 };

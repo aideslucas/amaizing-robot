@@ -7,10 +7,10 @@
 
 #include "WalkPath.h"
 
-WalkPath::WalkPath(Robot* myRobot, ConfigurationManager* configMgr, WaypointManager* wayPointMgr, ParticleFilter* pf)
+WalkPath::WalkPath(Robot* myRobot, ConfigurationManager* configMgr, WaypointManager* wayPointMgr, ParticleFilter* pf, Path* robotPath)
 {
 	_pf = pf;
-	//	_curr = pln->getStartPoint();
+	_action = robotPath->getPathStart();
 	_Robot = myRobot;
 	_wayPointsMgr = wayPointMgr;
 	_configMgr = configMgr;
@@ -36,16 +36,15 @@ void WalkPath::Walk()
 
 		_wayPointsMgr->setNextWaypoint(wayPoint);
 
-//		_curr->startCond();
+		_action->pathIsClear();
 
 		while (true)
 		{
-//			if(_curr->stopCond())
-//			{
-				// Perform the next behavior according to the plan
-//			    _curr = _curr->selectNextBehavior();
+			if(_action->pathNotClear())
+			{
+				_action = _action->SetAction();
 
-//			    _robot->Read();
+			    _Robot->Read();
 
 			    // if we hit the way point break, and go on to the next way point
 				if (_wayPointsMgr->isInWaypoint(_Robot->getXpos(), _Robot->getYpos()))
@@ -53,14 +52,16 @@ void WalkPath::Walk()
 					break;
 				}
 
-//				if (!_curr)
-//					break;
-//			}
+				if (!_action)
+				{
+					break;
+				}
+			}
 
 			// Do the current behavior's action
-//			_curr->action();
+			_action->Do();
 
-			_Robot->setSpeed(0.5,0.1);
+//			_Robot->setSpeed(0.5,0.1);
 
 			_Robot->Read();
 

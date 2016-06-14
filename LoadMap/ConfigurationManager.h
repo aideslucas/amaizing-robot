@@ -9,14 +9,21 @@
 #define CONFIGURATIONMANAGER_H_
 
 // Read configuration
-#define LINE_TO_READ 				100
-#define PROPERITES_NUMBER 			10
+#define LINE_TO_READ 			100
+#define PROPERITES_NUMBER 		10
 
 // Obstacles awareness
-#define LASER_RIGHT_VALUE 			250
-#define LASER_LEFT_VALUE			250
-#define LASER_STRAIGHT_VALUE		60
-#define MINIUM_ALLOWED_DISTANCE 	0.25
+#define LASER_RIGHT_VALUE 		250
+#define LASER_LEFT_VALUE		250
+#define LASER_STRAIGHT_VALUE	60
+#define LASER					111
+#define MINIUM_ALLOWED_DISTANCE 0.25
+#define SPEED					0.1
+#define DEGREE_INDEXE			2.4667
+#define YAW_DIFFERNCE			2
+#define RIGHT_SPEED				0.2
+#define LEFT_SPEED				0.2
+#define ACTION_COUNT			2
 
 #include <string>
 #include "Map.h"

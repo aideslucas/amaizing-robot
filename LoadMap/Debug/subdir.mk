@@ -5,13 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../AStarAlgorithm.cpp \
+../Actions.cpp \
 ../Cell.cpp \
 ../ConfigurationManager.cpp \
+../FindWayPoint.cpp \
 ../Graph.cpp \
 ../Main.cpp \
 ../Map.cpp \
+../Move.cpp \
 ../Particle.cpp \
 ../ParticleFilter.cpp \
+../Path.cpp \
+../PathPlanner.cpp \
 ../Robot.cpp \
 ../WalkPath.cpp \
 ../Waypoint.cpp \
@@ -20,13 +25,18 @@ CPP_SRCS += \
 
 OBJS += \
 ./AStarAlgorithm.o \
+./Actions.o \
 ./Cell.o \
 ./ConfigurationManager.o \
+./FindWayPoint.o \
 ./Graph.o \
 ./Main.o \
 ./Map.o \
+./Move.o \
 ./Particle.o \
 ./ParticleFilter.o \
+./Path.o \
+./PathPlanner.o \
 ./Robot.o \
 ./WalkPath.o \
 ./Waypoint.o \
@@ -35,13 +45,18 @@ OBJS += \
 
 CPP_DEPS += \
 ./AStarAlgorithm.d \
+./Actions.d \
 ./Cell.d \
 ./ConfigurationManager.d \
+./FindWayPoint.d \
 ./Graph.d \
 ./Main.d \
 ./Map.d \
+./Move.d \
 ./Particle.d \
 ./ParticleFilter.d \
+./Path.d \
+./PathPlanner.d \
 ./Robot.d \
 ./WalkPath.d \
 ./Waypoint.d \

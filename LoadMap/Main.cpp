@@ -19,6 +19,8 @@
 #include "WaypointManager.h"
 #include "WalkPath.h"
 #include "ParticleFilter.h"
+#include "Path.h"
+#include "PathPlanner.h"
 
 using namespace std;
 
@@ -60,8 +62,11 @@ int main()
 
 	ParticleFilter pf;
 
-	// Check Lucatron's movement
-	WalkPath wpth(&myRobot, &configMgr, &wpMgr, &pf);
+	// Create the path planner instance
+	PathPlanner robotPath(&myRobot, &wpMgr);
+
+	// Create the walk path instance
+	WalkPath wpth(&myRobot, &configMgr, &wpMgr, &pf, &robotPath);
 
 	// Start walking the path
 	wpth.Walk();

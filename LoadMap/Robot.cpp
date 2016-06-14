@@ -11,27 +11,21 @@ using namespace std;
 
 Robot::Robot(char* IP, int PortNum, ConfigurationManager* Config, int gridRows)
 {
-//    cout << "pp X: " << _posProxy->GetXPos() << " Y: " << _posProxy->GetYPos() << endl;
-
-	//this->_playerClinet = &pc;
-	//this->_posProxy 	= &pp;
-	//this->_laserProxy 	= &lp;
-	//this->_sonarProxy 	= &sp;
-
-	this->_playerClinet = new PlayerClient(IP, PortNum);
-	this->_posProxy 	= new Position2dProxy(_playerClinet);
-	this->_laserProxy   = new LaserProxy(_playerClinet);
-	this->_configMgr    = Config;
-	this->_gridRows	    = gridRows;
+	// Initialize robot's data members
+	_playerClinet = new PlayerClient(IP, PortNum);
+	_posProxy 	  = new Position2dProxy(_playerClinet);
+	_laserProxy   = new LaserProxy(_playerClinet);
+	_configMgr    = Config;
+	_gridRows	   = gridRows;
 
 	// Start motor
-	this->_posProxy -> SetMotorEnable(true);
+	_posProxy -> SetMotorEnable(true);
 
 	// Player Client Read
-	this->Read();
-
-	cout << "Before odometry: " << endl;
-	cout << "X: " << _posProxy->GetXPos() << " Y: " << _posProxy->GetYPos() << " Yaw: " << _posProxy->GetYaw() << endl;
+	for (int i=0;i<20;i++)
+	{
+		this->Read();
+	}
 
 	// Setting the location data
 	_posProxy->SetOdometry(((double)Config->robotStart.x / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
@@ -48,9 +42,6 @@ Robot::Robot(char* IP, int PortNum, ConfigurationManager* Config, int gridRows)
 
 	// Out put the location data
 	cout << " x " << getXpos() << " y " << getYpos() << "yaw" << getYaw() << endl;
-
-	cout << "After odometry: " << endl;
-	cout << "X: " << _posProxy->GetXPos() << " Y: " << _posProxy->GetYPos() << " Yaw: " << _posProxy->GetYaw() << endl;
 }
 
 // Read the robot data
@@ -69,7 +60,7 @@ void Robot::setSpeed(float xSpeed, float angularSpeed)
 bool Robot::rightIsClear()
 {
 	// If the obstacle distance is grater than the minimum allowed
-	if ((*this->_laserProxy)[LASER_RIGHT_VALUE] > MINIUM_ALLOWED_DISTANCE)
+	if ((*_laserProxy)[LASER_RIGHT_VALUE] > MINIUM_ALLOWED_DISTANCE)
 	{
 		// Return true
 		return (true);
@@ -86,7 +77,7 @@ bool Robot::rightIsClear()
 bool Robot::leftIsClear()
 {
 	// If the obstacle distance is grater than the minimum allowed
-	if ((*this->_laserProxy)[LASER_LEFT_VALUE] > MINIUM_ALLOWED_DISTANCE)
+	if ((*_laserProxy)[LASER_LEFT_VALUE] > MINIUM_ALLOWED_DISTANCE)
 	{
 		// Return true
 		return (true);
@@ -103,7 +94,7 @@ bool Robot::leftIsClear()
 bool Robot::straightIsClear()
 {
 	// If the obstacle distance is grater than the minimum allowed
-	if ((*this->_laserProxy)[LASER_STRAIGHT_VALUE] > MINIUM_ALLOWED_DISTANCE)
+	if ((*_laserProxy)[LASER_STRAIGHT_VALUE] > MINIUM_ALLOWED_DISTANCE)
 	{
 		// Return true
 		return (true);
@@ -119,17 +110,17 @@ bool Robot::straightIsClear()
 
 double Robot::getXpos()
 {
-	return ((this->_posProxy->GetXPos()) * this->_configMgr->gridResolutionCM);
+	return ((_posProxy->GetXPos()) * _configMgr->gridResolutionCM);
 }
 
 double Robot::getYpos()
 {
-	return (((this->_gridRows / this->_configMgr->gridResolutionCM) - this->_posProxy->GetYPos()) * this->_configMgr->gridResolutionCM);
+	return (((_gridRows / _configMgr->gridResolutionCM) - _posProxy->GetYPos()) * _configMgr->gridResolutionCM);
 }
 
 double Robot::getYaw()
 {
-	double yaw = 180*(this->_posProxy->GetYaw())/M_PI;
+	double yaw = 180*(_posProxy->GetYaw())/M_PI;
 
 	if(yaw >= 0)
  	{
@@ -147,13 +138,18 @@ LaserProxy* Robot::getLaser()
 	return (_laserProxy);
 }
 
+float Robot::getLeaserDist(int index)
+{
+	return (_laserProxy->GetRange(index));
+}
+
 bool Robot::checkRange(int nStart, int nEnd)
 {
 	bool is_Good = true;
 
 	for (int i = nStart; (i <= nEnd) && (is_Good); i++)
  	{
- 		is_Good = (this->_laserProxy->GetRange(i) > MINIUM_ALLOWED_DISTANCE);
+ 		is_Good = (this->getLeaserDist(i) > MINIUM_ALLOWED_DISTANCE);
  	}
 
  	return (is_Good);
@@ -161,14 +157,14 @@ bool Robot::checkRange(int nStart, int nEnd)
 
 double Robot::getLaserSpec()
 {
-	return(((this->_laserProxy->GetMaxAngle() * 180 / M_PI) + 120 ) / 0.36);
+	return(((_laserProxy->GetMaxAngle() * 180 / M_PI) + 120 ) / 0.36);
 }
 
 void Robot::drive(int movingDist)
 {
-	double radYaw = this->_posProxy->GetYaw();
-	double locationX = this->_posProxy->GetXPos();
-	double locationY = this->_posProxy->GetYPos();
+	double radYaw    = _posProxy->GetYaw();
+	double locationX = _posProxy->GetXPos();
+	double locationY = _posProxy->GetYPos();
 
 
 	locationX += (cos(radYaw) * movingDist);
@@ -186,7 +182,7 @@ void Robot::drive(int movingDist)
 		cout << currX << endl;
 	}
 
-	this->_posProxy->SetSpeed(0.0,0.0);
+	_posProxy->SetSpeed(0.0,0.0);
 }
 
 /*
