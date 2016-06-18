@@ -20,17 +20,15 @@ void WalkPath::Walk()
 {
 	Waypoint wayPoint;
 
-	set<Waypoint>::iterator currWay;
-
 	_Robot->Read();
 
 	double Xlocation = _Robot->getXpos();
 	double Ylocation = _Robot->getYpos();
 	double Yaw		 = _Robot->getYaw();
 
-	for (currWay = (_wayPointsMgr->waypoints).begin(); currWay != (_wayPointsMgr->waypoints).end(); ++currWay)
+	for (int i = 0; i < _wayPointsMgr->waypoints.size(); i++)
 	{
-		wayPoint = *currWay;
+		wayPoint = _wayPointsMgr->waypoints[i];
 		_Robot->Read();
 
 

@@ -9,37 +9,37 @@
 #define WAYPOINT_H_
 #include "limits.h"
 #include "Map.h"
+#include "Cell.h"
+
 class Waypoint {
 public:
-	Point point;
-	double yaw;
+	Cell point;
+	int yaw;
 
 	Waypoint();
-	Waypoint(Point point, double yaw);
+	Waypoint(Cell point, int yaw);
 
-	void operator()(Point point, double yaw)
+	void operator()(Cell point, int yaw)
 	{
-		this->point.x = point.x;
-		this->point.y = point.y;
+		this->point = point;
 		this->yaw = yaw;
 	}
 	bool operator<(const Waypoint& wp) const
 	{
-		return (this->point.y*INT_MAX + this->point.x < wp.point.y*INT_MAX + wp.point.x);
+		return (this->point.row*INT_MAX + this->point.col< wp.point.row*INT_MAX + wp.point.col);
 	}
 	void operator=(const Waypoint& wp)
 	{
-		this->point.x = wp.point.x;
-		this->point.y = wp.point.y;
+		this->point = wp.point;
 		this->yaw = wp.yaw;
 	}
 	bool operator==(const Waypoint& wp) const
 	{
-		return (this->point.y == wp.point.y && this->point.x == wp.point.x);
+		return (this->point == wp.point);
 	}
 	bool operator!=(const Waypoint& wp) const
 	{
-		return (this->point.y != wp.point.y || this->point.x != wp.point.x);
+		return (this->point != wp.point);
 	}
 
 

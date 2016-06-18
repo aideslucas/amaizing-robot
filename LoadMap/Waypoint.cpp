@@ -9,15 +9,14 @@
 
 Waypoint::Waypoint() {
 	// TODO Auto-generated constructor stub
-	this->point.x = 0;
-	this->point.y = 0;
-	this->yaw = 0;
+	this->point.col = -999;
+	this->point.row = -999;
+	this->yaw = -999;
 }
 
-Waypoint::Waypoint(Point point, double yaw)
+Waypoint::Waypoint(Cell point, int yaw)
 {
-	this->point.x = point.x;
-	this->point.y = point.y;
+	this->point = point;
 	this->yaw = yaw;
 }
 

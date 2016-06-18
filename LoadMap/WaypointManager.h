@@ -12,6 +12,7 @@
 #include "Graph.h"
 #include "math.h"
 #include "Waypoint.h"
+#include "Cell.h"
 
 using namespace std;
 #include <iostream>
@@ -19,7 +20,7 @@ using namespace std;
 
 class WaypointManager {
 public:
-	set<Waypoint> waypoints;
+	vector<Waypoint> waypoints;
 	Waypoint currWaypoint;
 
 	WaypointManager(vector<Cell> path, double gridResolution, double mapResolution);

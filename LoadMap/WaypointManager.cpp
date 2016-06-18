@@ -6,10 +6,95 @@
  */
 
 #include "WaypointManager.h"
+#include "Waypoint.h"
+#include "Cell.h"
+#include "Map.h"
+#include "Graph.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
+using namespace std;
 WaypointManager::WaypointManager(vector<Cell> path, double gridResolution, double mapResolution)
 {
-	this->astarPath = path;
+	int oldyaw = -999;
+	int counter = 0;
+	waypoints.resize(path.size());
+	for (int i = 0; i < path.size(); i++)
+	{
+		Cell point;
+		Waypoint waypoint;
+
+		point.col = path[i].col;
+		point.row = path[i].row;
+
+		waypoint.point = point;
+
+			if (i == path.size())
+			{
+				waypoint.yaw = -1;
+			}
+			else
+				{
+				if (path[i + 1].col == waypoint.point.col ||
+					path[i + 1].row == waypoint.point.row)
+				{
+					if (path[i + 1].col == waypoint.point.col &&
+							path[i + 1].row == waypoint.point.row + 1)
+					{
+						waypoint.yaw = 270;
+					}
+					else if (path[i + 1].col == waypoint.point.col &&
+							path[i + 1].row == waypoint.point.row - 1)
+					{
+						waypoint.yaw = 90;
+					}
+					else if (path[i + 1].col == waypoint.point.col + 1 &&
+							path[i + 1].row == waypoint.point.row)
+					{
+						waypoint.yaw = 0;
+					}
+					else
+					{
+						waypoint.yaw = 180;
+					}
+				}
+				else if (path[i + 1].col == waypoint.point.col + 1 &&
+						path[i + 1].row == waypoint.point.row + 1 )
+				{
+					waypoint.yaw = 315;
+				}
+				else if (path[i + 1].col == waypoint.point.col + 1 &&
+						path[i + 1].row == waypoint.point.row - 1 )
+				{
+					waypoint.yaw = 45;
+				}
+				else if (path[i + 1].col == waypoint.point.col - 1 &&
+						path[i + 1].row == waypoint.point.row + 1 )
+				{
+					waypoint.yaw = 225;
+				}
+				else
+				{
+					waypoint.yaw = 135;
+				}
+			}
+
+			if (waypoint.yaw != oldyaw)
+			{
+				waypoints[counter++] = waypoint;
+				oldyaw = waypoint.yaw;
+			}
+		}
+
+		Waypoint first = waypoints[0];
+		currWaypoint.point = first.point;
+		currWaypoint.yaw = first.yaw;
+		nextWaypoint.point = first.point;
+		nextWaypoint.yaw = first.yaw;
+		waypoints.resize(counter);
+
 	this->gridResolution = gridResolution;
 	this->mapResolution = mapResolution;
 }
@@ -17,137 +102,19 @@ WaypointManager::WaypointManager(vector<Cell> path, double gridResolution, doubl
 // Creating way point every "num_of_cells" item on the path
 void WaypointManager::buildWaypointVector(int numberOfCells)
 {
-	set<Waypoint>::iterator index = waypoints.begin();
-	int counter = 0;
-	double m;
-	Waypoint current;
+	Waypoint waypoint;
+	int oldyaw = -999;
 
 	for (int i = 0; i < astarPath.size(); i++)
 	{
-		if(i == 0)
-		{
-			m = calculateIncline(astarPath[i],astarPath[i+1]);
-			current.point.x = astarPath[i].col;
-			current.point.y = astarPath[i].row;
-			current.yaw = calculateYaw(m, astarPath[i], astarPath[i+1]);
-			waypoints.insert(index,current);
-			++index;
-
-			currWaypoint.point = current.point;
-			currWaypoint.yaw = current.yaw;
-
-			nextWaypoint.point = current.point;
-			nextWaypoint.yaw = current.yaw;
-
 		}
-		else if (i == (astarPath.size() - 1))
-		{
-			current.point.x = astarPath[i].col;
-			current.point.y = astarPath[i].row;
-			current.yaw = calculateYaw(m, astarPath[i-1], astarPath[i]);
-			waypoints.insert(index,current);
-			++index;
-		}
-		else if (counter == numberOfCells)
-		{
-			m = calculateIncline(astarPath[i], astarPath[i+1]);
-
-			current.point.x = astarPath[i].col;
-			current.point.y = astarPath[i].row;
-			current.yaw = calculateYaw(m, astarPath[i], astarPath[i+1]);
-			waypoints.insert(index,current);
-			++index;
-			counter = 0;
-		}
-		else
-		{
-			double newM;
-			bool isOldVarticle;
-			isOldVarticle = isVerticle;
-			newM = calculateIncline(astarPath[i], astarPath[i+1]);
-			if((newM != m)||(isOldVarticle != isVerticle))
-			{
-				current.point.x = astarPath[i].col;
-				current.point.y = astarPath[i].row;
-				current.yaw = calculateYaw(newM, astarPath[i], astarPath[i+1]);
-				waypoints.insert(index,current);
-				++index;
-				counter = 0;
-			}
-			m = newM;
-		}
-
-		counter++;
-	}
 }
-
 double WaypointManager::calculateYaw(double m, Cell from, Cell to)
 {
-	double angle;
-
-	if(!isVerticle)
-	{
-		angle = 180 * atan(m) / M_PI;
-	}
-
-	if (isVerticle)
-	{
-		if (to.row > from.row)
-		{
-			return (270);
-		}
-		else
-		{
-			return (90);
-		}
-	}
-	else if (m == 0)
-	{
-		if (to.col > from.col)
-		{
-			return (angle);
-		}
-		else
-		{
-			return (180 + angle);
-		}
-	}
-	else if (m > 0)
-	{
-		if (to.row > from.row)
-		{
-			return (360 - angle);
-		}
-		else
-		{
-			return (180 - angle);
-		}
-	}
-	else
-	{
-		if (to.row > from.row)
-		{
-			return (180 + angle);
-		}
-		else
-		{
-			return (angle);
-		}
-	}
 }
 
 double WaypointManager::calculateIncline(Cell from, Cell to)
 {
-	isVerticle = 0;
-	if(from.col == to.col)
-	{
-		isVerticle = 1;
-		return(9999);
-	}
-	else
-	{
-		return((to.row - from.row) / (to.col - from.col));
-	}
 }
 
 void WaypointManager::setNextWaypoint(Waypoint next)
@@ -162,12 +129,12 @@ void WaypointManager::setNextWaypoint(Waypoint next)
 
 bool WaypointManager::isInWaypoint(double x,double y)
 {
-	double dx = nextWaypoint.point.x - x;
-	double dy = nextWaypoint.point.y - y;
+	double dx = nextWaypoint.point.col - x;
+	double dy = nextWaypoint.point.row - y;
 	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
-	cout << "Next way point x: "<< nextWaypoint.point.x << " ---> current x: " << x << endl;
-	cout << "Next way point y: "<< nextWaypoint.point.y << " ---> current y: " << y << endl;
+	cout << "Next way point x: "<< nextWaypoint.point.col << " ---> current x: " << x << endl;
+	cout << "Next way point y: "<< nextWaypoint.point.row << " ---> current y: " << y << endl;
 	cout << "Next way point yaw" << nextWaypoint.yaw <<  endl;
 	cout << "Distance to next way point: " << (distance) << endl;
 	cout << endl;
@@ -180,8 +147,4 @@ bool WaypointManager::isInWaypoint(double x,double y)
 	return false;
 }
 
-
-WaypointManager::~WaypointManager() {
-	// TODO Auto-generated destructor stub
-}
-
+WaypointManager::~WaypointManager() {}

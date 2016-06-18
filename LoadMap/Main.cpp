@@ -52,15 +52,21 @@ int main()
 	map.saveMap("infloatedMap.png");
 
 
-	// Create a robot instance
-	Robot myRobot("localhost", 6665, &configMgr, graph.nodes.size());
 
 	// Create a waypoint instance
-	WaypointManager wpMgr(path, configMgr.gridResolutionCM, configMgr.mapResolutionCM);
+	WaypointManager wpMgr(algo.StartAlgorithm(), configMgr.gridResolutionCM, configMgr.mapResolutionCM);
 
-	wpMgr.buildWaypointVector(3);
+	//wpMgr.buildWaypointVector(3);
+
+	for (int i = 0; i < wpMgr.waypoints.size(); i++)
+	{
+		printf("x = %d, y = %d, yaw = %d\n", wpMgr.waypoints[i].point.col, wpMgr.waypoints[i].point.row, wpMgr.waypoints[i].yaw);
+	}
 
 	ParticleFilter pf;
+
+	// Create a robot instance
+	Robot myRobot("localhost", 6665, &configMgr, graph.nodes.size());
 
 	// Create the path planner instance
 	PathPlanner robotPath(&myRobot, &wpMgr);
