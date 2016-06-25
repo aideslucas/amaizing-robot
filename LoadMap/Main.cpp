@@ -64,7 +64,7 @@ int main()
 	}
 
 	ParticleFilter pf;
-
+/*
 	// Create a robot instance
 	Robot myRobot("localhost", 6665, &configMgr, graph.nodes.size());
 
@@ -76,6 +76,32 @@ int main()
 
 	// Start walking the path
 	wpth.Walk();
+*/
+
+	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size());
+	Waypoint wayPoint;
+	lucatron.Read();
+
+	double Xlocation = lucatron.getXpos();
+	double Ylocation = lucatron.getYpos();
+	double Yaw		 = lucatron.getYaw();
+
+	for (int i = 0; i < wpMgr.waypoints.size(); i++)
+	{
+		wayPoint = wpMgr.waypoints[i];
+		wpMgr.setNextWaypoint(wayPoint);
+
+		lucatron.Read();
+
+		while (!wpMgr.isInWaypoint(lucatron.getXpos(), lucatron.getYpos()))
+		{
+			lucatron.Read();
+			lucatron.setSpeed(0.2,0);
+		}
+
+		lucatron.setSpeed(0,0);
+		lucatron.setYaw(wayPoint.yaw);
+	}
 
 	// Return value
 	return 0;

@@ -9,6 +9,7 @@
 #define WALKPATH_H_
 
 #include "Robot.h"
+#include "Lucatron.h"
 #include "WaypointManager.h"
 #include "Waypoint.h"
 #include "ParticleFilter.h"

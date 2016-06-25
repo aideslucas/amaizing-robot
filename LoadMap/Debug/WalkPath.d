@@ -12,9 +12,9 @@ WalkPath.d: ../WalkPath.cpp ../WalkPath.h ../Robot.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
  /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
- ../ConfigurationManager.h ../Map.h ../WaypointManager.h ../Graph.h \
- ../Cell.h ../Waypoint.h ../ParticleFilter.h ../Particle.h ../Path.h \
- ../Actions.h
+ ../ConfigurationManager.h ../Map.h ../Lucatron.h ../WaypointManager.h \
+ ../Graph.h ../Cell.h ../Waypoint.h ../ParticleFilter.h ../Particle.h \
+ ../Path.h ../Actions.h
 
 ../WalkPath.h:
 
@@ -49,6 +49,8 @@ WalkPath.d: ../WalkPath.cpp ../WalkPath.h ../Robot.h \
 ../ConfigurationManager.h:
 
 ../Map.h:
+
+../Lucatron.h:
 
 ../WaypointManager.h:
 

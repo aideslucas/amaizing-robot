@@ -27,6 +27,7 @@ bool Move::pathIsClear()
 	// Return value
 	return (InRange);
 }
+
 bool Move::pathNotClear()
 {
 	// Initializing variables
@@ -38,6 +39,7 @@ bool Move::pathNotClear()
 	IsinWayPoint = _wayPointMgr->isInWaypoint(_robot->getXpos(), _robot->getYpos());
 	return (!pathIsClear() || (IsinWayPoint));
 }
+
 void Move::Do()
 {
 	_robot->setSpeed(SPEED, 0.0);

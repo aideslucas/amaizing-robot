@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../ConfigurationManager.cpp \
 ../FindWayPoint.cpp \
 ../Graph.cpp \
+../Lucatron.cpp \
 ../Main.cpp \
 ../Map.cpp \
 ../Move.cpp \
@@ -30,6 +31,7 @@ OBJS += \
 ./ConfigurationManager.o \
 ./FindWayPoint.o \
 ./Graph.o \
+./Lucatron.o \
 ./Main.o \
 ./Map.o \
 ./Move.o \
@@ -50,6 +52,7 @@ CPP_DEPS += \
 ./ConfigurationManager.d \
 ./FindWayPoint.d \
 ./Graph.d \
+./Lucatron.d \
 ./Main.d \
 ./Map.d \
 ./Move.d \

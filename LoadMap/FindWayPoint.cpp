@@ -53,6 +53,7 @@ bool FindWayPoint::pathIsClear()
 		return(_robot->checkRange( _robot->getLaserSpec() - (_diffrence * DEGREE_INDEXE),_robot->getLaserSpec() ));
 	}
 }
+
 bool FindWayPoint::pathNotClear()
 {
 	if(_isRight)

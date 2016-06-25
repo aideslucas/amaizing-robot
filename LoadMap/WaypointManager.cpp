@@ -135,7 +135,7 @@ bool WaypointManager::isInWaypoint(double x,double y)
 
 	cout << "Next way point x: "<< nextWaypoint.point.col << " ---> current x: " << x << endl;
 	cout << "Next way point y: "<< nextWaypoint.point.row << " ---> current y: " << y << endl;
-	cout << "Next way point yaw" << nextWaypoint.yaw <<  endl;
+	cout << "Next way point yaw: " << nextWaypoint.yaw <<  endl;
 	cout << "Distance to next way point: " << (distance) << endl;
 	cout << endl;
 

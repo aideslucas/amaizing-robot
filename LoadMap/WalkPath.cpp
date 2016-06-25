@@ -31,7 +31,6 @@ void WalkPath::Walk()
 		wayPoint = _wayPointsMgr->waypoints[i];
 		_Robot->Read();
 
-
 		_wayPointsMgr->setNextWaypoint(wayPoint);
 
 		_action->pathIsClear();
@@ -58,8 +57,6 @@ void WalkPath::Walk()
 
 			// Do the current behavior's action
 			_action->Do();
-
-//			_Robot->setSpeed(0.5,0.1);
 
 			_Robot->Read();
 
