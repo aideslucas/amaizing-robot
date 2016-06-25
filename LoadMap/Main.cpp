@@ -80,26 +80,20 @@ int main()
 
 	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size());
 	Waypoint wayPoint;
-	lucatron.Read();
 
-	double Xlocation = lucatron.getXpos();
-	double Ylocation = lucatron.getYpos();
-	double Yaw		 = lucatron.getYaw();
+	lucatron.setYaw(wpMgr.waypoints[0].yaw);
 
-	for (int i = 0; i < wpMgr.waypoints.size(); i++)
+	for (int i = 1; i < wpMgr.waypoints.size(); i++)
 	{
 		wayPoint = wpMgr.waypoints[i];
 		wpMgr.setNextWaypoint(wayPoint);
 
-		lucatron.Read();
-
 		while (!wpMgr.isInWaypoint(lucatron.getXpos(), lucatron.getYpos()))
 		{
-			lucatron.Read();
 			lucatron.setSpeed(0.2,0);
+			lucatron.Read();
 		}
 
-		lucatron.setSpeed(0,0);
 		lucatron.setYaw(wayPoint.yaw);
 	}
 
