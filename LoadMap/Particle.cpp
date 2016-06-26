@@ -16,6 +16,11 @@ Particle::Particle(Point point, double dYaw)
 	this->belief = 1;
 }
 
+void Particle::paint(Map* map)
+{
+	map->paintCell(this->point, 0, 0, 255 * this->belief);
+}
+
 double Particle::update(Point deltaPoint, double deltaTeta , LaserProxy* laser)
 {
 	// Update the particle position

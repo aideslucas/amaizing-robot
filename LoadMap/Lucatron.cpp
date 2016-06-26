@@ -107,7 +107,7 @@ double Lucatron::getLaserSpec()
 {
 	return(((_laserProxy->GetMaxAngle() * 180 / M_PI) + 120 ) / 0.36);
 }
-
+/*
 void Lucatron::drive(int movingDist)
 {
 	double radYaw    = _posProxy->GetYaw();
@@ -132,7 +132,7 @@ void Lucatron::drive(int movingDist)
 
 	_posProxy->SetSpeed(0.0,0.0);
 }
-
+*/
 void Lucatron::setYaw(double Yaw) {
 	double currYaw = getYaw();
 	double diff = Yaw - currYaw;
@@ -145,11 +145,9 @@ void Lucatron::setYaw(double Yaw) {
 
 	setSpeed(0,turnSpeed);
 
-	while (abs(diff) > 2)
+	while (abs(getYaw() - Yaw) > YAW_DIFFERNCE)
 	{
 		Read();
-		currYaw = getYaw();
-		diff = Yaw - currYaw;
 	}
 
 	setSpeed(0,0);

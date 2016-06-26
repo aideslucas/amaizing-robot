@@ -82,6 +82,18 @@ ParticleFilter::ParticleFilter() {
 	arrParticles.push_front(*particle);
 }
 
+void ParticleFilter::paint(Map* map)
+{
+	list<Particle>::iterator it;
+	Particle* particle;
+
+	for (it=arrParticles.begin(); it!=arrParticles.end(); ++it)
+	{
+		particle = it.operator ->();
+		particle->paint(map);
+	}
+}
+
 ParticleFilter::~ParticleFilter() {
 	// TODO Auto-generated destructor stub
 }

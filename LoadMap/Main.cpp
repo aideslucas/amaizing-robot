@@ -81,6 +81,12 @@ int main()
 	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size());
 	Waypoint wayPoint;
 
+	lucatron.Read();
+
+	double Xlocation = lucatron.getXpos();
+	double Ylocation = lucatron.getYpos();
+	double Yaw		 = lucatron.getYaw();
+
 	lucatron.setYaw(wpMgr.waypoints[0].yaw);
 
 	for (int i = 1; i < wpMgr.waypoints.size(); i++)
@@ -92,9 +98,35 @@ int main()
 		{
 			lucatron.setSpeed(0.2,0);
 			lucatron.Read();
+
+			// Gets the position of the robot after read
+			double currX   = lucatron.getXpos();
+			double currY   = lucatron.getYpos();
+			double currYaw = lucatron.getYaw();
+
+			double deltaX = currX - Xlocation;
+			double deltaY = currY - Ylocation;
+			double deltaTeta = currYaw	 - Yaw;
+
+			// Update particles
+			Point point;
+			point.x = Xlocation;
+			point.y = Ylocation;
+			Point deltaPoint;
+			deltaPoint.x = deltaX;
+			deltaPoint.y = deltaY;
+			pf.update(point, Yaw, deltaPoint, deltaTeta, lucatron.getLaser());
+
+			Xlocation = currX;
+			Ylocation = currY;
+			Yaw = currYaw;
+
+			pf.paint(&map);
+			map.saveMap("particle" + i);
 		}
 
-		lucatron.setYaw(wayPoint.yaw);
+		if (i < wpMgr.waypoints.size() -1)
+			lucatron.setYaw(wayPoint.yaw);
 	}
 
 	// Return value

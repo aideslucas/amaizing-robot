@@ -25,6 +25,8 @@ class Particle
 	public:
 	Particle(Point point, double dYaw);
 	double getBelief();
+	void paint(Map* map);
+
 	double update(Point deltaPoint, double deltaTeta , LaserProxy* laser);
 	double probabibilityMove(Point deltaPoint, double deltaTeta);
 	virtual ~Particle();

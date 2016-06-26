@@ -9,6 +9,7 @@
 #define PARTICLEFILTER_H_
 #include <list>
 #include "Particle.h"
+#include "Map.h"
 using namespace std;
 #define THRESHOLD 0.25
 #define STANDARD 0.7
@@ -27,6 +28,8 @@ public:
 	void update(Point point, double teta, Point deltaPoint,	double deltaTeta, LaserProxy* pLaserProxy);
 	Particle* getHighestProbParticle();
 	virtual ~ParticleFilter();
+	void paint(Map* map);
+
 };
 
 #endif /* PARTICLEFILTER_H_ */
