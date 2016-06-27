@@ -94,6 +94,19 @@ void ParticleFilter::paint(Map* map)
 	}
 }
 
+void ParticleFilter::unpaint(Map* map)
+{
+	list<Particle>::iterator it;
+	Particle* particle;
+
+	for (it=arrParticles.begin(); it!=arrParticles.end(); ++it)
+	{
+		particle = it.operator ->();
+		particle->unpaint(map);
+	}
+}
+
+
 ParticleFilter::~ParticleFilter() {
 	// TODO Auto-generated destructor stub
 }

@@ -29,7 +29,7 @@ public:
 	Particle* getHighestProbParticle();
 	virtual ~ParticleFilter();
 	void paint(Map* map);
-
+	void unpaint(Map* map);
 };
 
 #endif /* PARTICLEFILTER_H_ */

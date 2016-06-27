@@ -18,8 +18,38 @@ Particle::Particle(Point point, double dYaw)
 
 void Particle::paint(Map* map)
 {
-	map->paintCell(this->point, 0, 0, 255 * this->belief);
+	for (int i = belief * -10; i < belief * 10; i++)
+	{
+		for (int j = belief * -10; j < belief * 10; j++)
+		{
+			if (i > 0 && j > 0 && i < map->getWidth() && j < map->getHeight())
+			{
+				Point p;
+				p.x = point.x + j;
+				p.y = point.y + i;
+				map->paintCell(p, 0, 0, 255 * this->belief);
+			}
+		}
+	}
 }
+
+void Particle::unpaint(Map* map)
+{
+	for (int i = belief * -10; i < belief * 10; i++)
+		{
+			for (int j = belief * -10; j < belief * 10; j++)
+			{
+				if (i > 0 && j > 0 && i < map->getWidth() && j < map->getHeight())
+				{
+					Point p;
+					p.x = point.x + j;
+					p.y = point.y + i;
+					map->paintCell(p, 0, 0, 0);
+				}
+			}
+		}
+}
+
 
 double Particle::update(Point deltaPoint, double deltaTeta , LaserProxy* laser)
 {

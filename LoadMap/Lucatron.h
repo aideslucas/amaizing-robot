@@ -11,6 +11,9 @@
 
 #include <libplayerc++/playerc++.h>
 #include "ConfigurationManager.h"
+#include "ParticleFilter.h"
+#include "WaypointManager.h"
+#include "Map.h"
 
 using namespace PlayerCc;
 
@@ -20,10 +23,13 @@ class Lucatron {
 	LaserProxy* _laserProxy;
 	SonarProxy* _sonarProxy;
 	ConfigurationManager* _configMgr;
+	ParticleFilter* _pf;
+	WaypointManager* _wpMgr;
+	Map* _map;
 
 	public:
 	//Robot constructor & destructor
-	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows);
+	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, ParticleFilter* pf, WaypointManager* wpMgr, Map* map);
 	virtual ~Lucatron();
 
 	// Robot position
@@ -50,6 +56,7 @@ class Lucatron {
 
 	void drive(int configMgrToMove);
 	void setSpeed(float xSpeed, float angularSpeed);
+	void goToWaypoint();
 	void Read();
 };
 

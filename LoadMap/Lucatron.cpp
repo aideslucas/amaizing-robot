@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows)
+Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, ParticleFilter* pf, WaypointManager* wpMgr, Map* map)
 {
 	// Initialize robot's data members
 	_playerClinet = new PlayerClient(IP, PortNum);
@@ -17,6 +17,9 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 	_laserProxy   = new LaserProxy(_playerClinet);
 	_configMgr    = Config;
 	_gridRows	  = gridRows;
+	_pf 		  = pf;
+	_wpMgr 		  = wpMgr;
+	_map 		  = map;
 
 	// Start motor
 	_posProxy -> SetMotorEnable(true);
@@ -42,12 +45,39 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 
 	// Out put the location data
 	cout << " x " << getXpos() << " y " << getYpos() << "yaw" << getYaw() << endl;
+
 }
 
 // Read the robot data
 void Lucatron::Read()
 {
+	// Gets the position of the robot before read
+	Point location;
+	location.x = getXpos();
+	location.y = getYpos();
+	double Yaw = getYaw();
+
+	// Read
 	_playerClinet->Read();
+
+	// Gets the position of the robot after read
+	double currX   = getXpos();
+	double currY   = getYpos();
+	double currYaw = getYaw();
+
+	// Get how much the robot moved
+	Point delta;
+	delta.x = currX - location.x;
+	delta.y = currY - location.y;
+	double deltaTeta = currYaw	 - Yaw;
+
+	// Update particles
+	_pf->update(location, Yaw, delta, deltaTeta, getLaser());
+
+	_pf->paint(_map);
+	_map->saveMap("CurrParticleGuess.png");
+	_pf->unpaint(_map);
+
 }
 
 // Set the moving speed
@@ -107,32 +137,7 @@ double Lucatron::getLaserSpec()
 {
 	return(((_laserProxy->GetMaxAngle() * 180 / M_PI) + 120 ) / 0.36);
 }
-/*
-void Lucatron::drive(int movingDist)
-{
-	double radYaw    = _posProxy->GetYaw();
-	double locationX = _posProxy->GetXPos();
-	double locationY = _posProxy->GetYPos();
 
-
-	locationX += (cos(radYaw) * movingDist);
-	locationY += (sin(radYaw) * movingDist);
-
-	double currX = getXpos();
-	double currY = getYpos();
-
-	while(currX < locationX)
-	{
-		this->_playerClinet->Read();
-		this->_posProxy->SetSpeed(0.2, 0.0);
-		currX = getXpos();
-		currY = getYpos();
-		cout << currX << endl;
-	}
-
-	_posProxy->SetSpeed(0.0,0.0);
-}
-*/
 void Lucatron::setYaw(double Yaw) {
 	double currYaw = getYaw();
 	double diff = Yaw - currYaw;
@@ -147,6 +152,17 @@ void Lucatron::setYaw(double Yaw) {
 
 	while (abs(getYaw() - Yaw) > YAW_DIFFERNCE)
 	{
+		Read();
+	}
+
+	setSpeed(0,0);
+}
+
+void Lucatron::goToWaypoint()
+{
+	while (!_wpMgr->isInWaypoint(getXpos(), getYpos()))
+	{
+		setSpeed(0.2,0);
 		Read();
 	}
 
