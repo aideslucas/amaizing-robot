@@ -21,7 +21,7 @@
 #define SPEED					0.1
 #define DEGREE_INDEXE			2.4667
 #define YAW_DIFFERNCE			2
-#define RIGHT_SPEED				0.2
+#define RIGHT_SPEED				-0.2
 #define LEFT_SPEED				0.2
 #define ACTION_COUNT			2
 

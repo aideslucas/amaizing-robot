@@ -36,7 +36,7 @@ bool Move::pathNotClear()
 	// Read robot date
 	_robot->Read();
 
-	IsinWayPoint = _wayPointMgr->isInWaypoint(_robot->getXpos(), _robot->getYpos());
+	//IsinWayPoint = _wayPointMgr->isInWaypoint(_robot->getXpos(), _robot->getYpos());
 	return (!pathIsClear() || (IsinWayPoint));
 }
 

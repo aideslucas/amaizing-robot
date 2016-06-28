@@ -44,10 +44,10 @@ void WalkPath::Walk()
 			    _Robot->Read();
 
 			    // if we hit the way point break, and go on to the next way point
-				if (_wayPointsMgr->isInWaypoint(_Robot->getXpos(), _Robot->getYpos()))
-				{
-					break;
-				}
+				//if (_wayPointsMgr->isInWaypoint(_Robot->getXpos(), _Robot->getYpos()))
+				//{
+				//	break;
+				//}
 
 				if (!_action)
 				{

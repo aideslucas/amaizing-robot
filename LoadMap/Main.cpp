@@ -78,7 +78,7 @@ int main()
 	wpth.Walk();
 */
 
-	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size(), &pf, &wpMgr, &map);
+	Lucatron lucatron("10.10.245.63", 6665, &configMgr, graph.nodes.size(), &pf, &wpMgr, &map);
 	Waypoint wayPoint;
 
 	lucatron.setYaw(wpMgr.waypoints[0].yaw);

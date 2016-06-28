@@ -38,7 +38,6 @@ bool FindWayPoint::pathIsClear()
 	{
 		_isRight = 0;
 	}
-
 	else
 	{
 		_isRight = 1;

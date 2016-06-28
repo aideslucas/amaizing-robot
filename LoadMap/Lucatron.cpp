@@ -25,10 +25,12 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 	_posProxy -> SetMotorEnable(true);
 
 	// Player Client Read
-	for (int i=0;i<20;i++)
-	{
-		this->Read();
-	}
+//	for (int i=0;i<20;i++)
+//	{
+//		this->Read();
+//	}
+
+	this->Read();
 
 	// Setting the location data
 	_posProxy->SetOdometry(((double)Config->robotStart.x / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
@@ -70,14 +72,14 @@ void Lucatron::Read()
 	delta.x = currX - location.x;
 	delta.y = currY - location.y;
 	double deltaTeta = currYaw	 - Yaw;
-
+/*
 	// Update particles
 	_pf->update(location, Yaw, delta, deltaTeta, getLaser());
 
 	_pf->paint(_map);
 	_map->saveMap("CurrParticleGuess.png");
 	_pf->unpaint(_map);
-
+*/
 }
 
 // Set the moving speed
@@ -138,19 +140,20 @@ double Lucatron::getLaserSpec()
 	return(((_laserProxy->GetMaxAngle() * 180 / M_PI) + 120 ) / 0.36);
 }
 
-void Lucatron::setYaw(double Yaw) {
+void Lucatron::setYaw(double Yaw)
+{
 	double currYaw = getYaw();
 	double diff = Yaw - currYaw;
-	double turnSpeed = 0.2;
+	double turnSpeed = 0.12;
 
 	if (diff < 0 || diff > 180)
 	{
-		turnSpeed = -0.2;
+		turnSpeed = -0.12;
 	}
 
 	setSpeed(0,turnSpeed);
 
-	while (abs(getYaw() - Yaw) > YAW_DIFFERNCE)
+	while (abs(getYaw() - Yaw) > 2)
 	{
 		Read();
 	}
@@ -160,9 +163,9 @@ void Lucatron::setYaw(double Yaw) {
 
 void Lucatron::goToWaypoint()
 {
-	while (!_wpMgr->isInWaypoint(getXpos(), getYpos()))
+	while (!_wpMgr->isInWaypoint(getXpos(), getYpos(), getYaw()))
 	{
-		setSpeed(0.2,0);
+		setSpeed(0.12,0);
 		Read();
 	}
 

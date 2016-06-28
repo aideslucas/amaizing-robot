@@ -26,7 +26,7 @@ public:
 	WaypointManager(vector<Cell> path, double gridResolution, double mapResolution);
 	void buildWaypointVector(int numberOfCells);
 	void setNextWaypoint(Waypoint Next);
-	bool isInWaypoint(double x,double y);
+	bool isInWaypoint(double x,double y, double yaw);
 	virtual ~WaypointManager();
 
 private:
