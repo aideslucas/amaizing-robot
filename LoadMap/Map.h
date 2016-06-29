@@ -36,7 +36,6 @@ private:
 	void setInflotedCellIsOccupied(Point point);
 	void printMap() const;
 	void printInflotedMap() const;
-	bool checkIfCellIsOccupied(Point point);
 
 public:
 	Map(double mapResolution, double robotHeight, double robotWidth);
@@ -49,6 +48,7 @@ public:
 	double getMapResolution() const;
 	bool checkIfInflotedMapCellIsOccupied(Point point) const;
 	void paintCell(Point point, int r, int g, int b);
+	bool checkIfCellIsOccupied(Point point);
 };
 
 #endif /* MAP_H_ */

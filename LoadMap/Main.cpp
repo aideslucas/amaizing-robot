@@ -3,7 +3,7 @@
  *
  *  Created on: April 16, 2016
  *      Author: Eylam Milner 311212419
- *      		Lucas Aids	 324392992
+ *      		Lucas Aides	 324392992
  */
 
 #include "Map.h"
@@ -17,6 +17,7 @@
 #include "Cell.h"
 #include "WaypointManager.h"
 #include "Lucatron.h"
+#include "LocalizationManager.h"
 
 using namespace std;
 
@@ -49,8 +50,12 @@ int main()
 	// Create a waypoint instance
 	WaypointManager wpMgr(algo.StartAlgorithm(), configMgr.gridResolutionCM, configMgr.mapResolutionCM);
 
+	Position startPosition(configMgr.robotStart.x, configMgr.robotStart.y, configMgr.robotStartYAW);
 
-	Lucatron lucatron("10.10.245.63", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map);
+	LocalizationManager* localizationManager = new LocalizationManager(&startPosition, &map);
+
+	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map, localizationManager);
+
 	Waypoint wayPoint;
 
 	lucatron.setYaw(wpMgr.waypoints[0].yaw);

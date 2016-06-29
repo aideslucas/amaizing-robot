@@ -27,6 +27,7 @@ public:
 	void buildWaypointVector(int numberOfCells);
 	void setNextWaypoint(Waypoint Next);
 	bool isInWaypoint(double x,double y, double yaw);
+	bool isNearWaypoint(double x,double y, double yaw);
 	virtual ~WaypointManager();
 
 private:
