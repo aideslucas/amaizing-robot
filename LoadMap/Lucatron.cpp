@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, ParticleFilter* pf, WaypointManager* wpMgr, Map* map)
+Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map)
 {
 	// Initialize robot's data members
 	_playerClinet = new PlayerClient(IP, PortNum);
@@ -17,7 +17,6 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 	_laserProxy   = new LaserProxy(_playerClinet);
 	_configMgr    = Config;
 	_gridRows	  = gridRows;
-	_pf 		  = pf;
 	_wpMgr 		  = wpMgr;
 	_map 		  = map;
 
@@ -144,11 +143,11 @@ void Lucatron::setYaw(double Yaw)
 {
 	double currYaw = getYaw();
 	double diff = Yaw - currYaw;
-	double turnSpeed = 0.12;
+	double turnSpeed = 0.15;
 
 	if (diff < 0 || diff > 180)
 	{
-		turnSpeed = -0.12;
+		turnSpeed = -0.15;
 	}
 
 	setSpeed(0,turnSpeed);
@@ -165,7 +164,7 @@ void Lucatron::goToWaypoint()
 {
 	while (!_wpMgr->isInWaypoint(getXpos(), getYpos(), getYaw()))
 	{
-		setSpeed(0.12,0);
+		setSpeed(0.08,0);
 		Read();
 	}
 
