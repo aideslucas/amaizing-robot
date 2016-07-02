@@ -26,7 +26,7 @@ class Lucatron {
 	WaypointManager* _wpMgr;
 	Map* _map;
 	LocalizationManager* _localizationManager;
-
+int _printCount ;
 	public:
 	//Robot constructor & destructor
 	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map, LocalizationManager* localizationManager);
@@ -36,6 +36,9 @@ class Lucatron {
 	double _Xpos;
 	double _Ypos;
 	double _Yaw;
+	double _lastX;
+	double _lastY;
+	double _lastYaw;
 	int    _gridRows;
 
 	// Get the robot position

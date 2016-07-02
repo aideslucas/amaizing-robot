@@ -27,6 +27,8 @@ Particle::Particle(Position pos, float belief, Map* map) {
 	// run until we get particle not on block
 	while (this->_map->checkIfCellIsOccupied(positionPoint)) {
 		this->_position = createPositionRandomly(pos);
+		positionPoint.x = _position.getCol();
+		positionPoint.y = _position.getRow();
 	}
 }
 
@@ -82,7 +84,7 @@ float Particle::UpdateParticle(double dRow, double dCol, double dYaw,
 	this->_position.setYaw(this->_position.getYaw() + dYaw);
 
 	float predBel = ProbByMove(dRow, dCol, dYaw) * this->_belief;
-	this->_belief = 1.1 * ProbByLaser(laserArray) * predBel;
+	this->_belief = 1.1 * predBel; // ProbByLaser(laserArray) *
 
 	if (this->_belief > 1) {
 		this->_belief = 1;
@@ -132,8 +134,6 @@ float Particle::ProbByLaser(float laserArray[]) {
 		totalReadingAmount++;
 		float laserScan = laserArray[laserRead];
 
-		// Free (don't see anything!)
-		//if (laserScan > MAX_LEASER_DISTANCE - 0.2) {
 		correctReadingAmount += checkIfLaserDetectRight(laserScan, laserRead);
 	}
 
@@ -141,20 +141,8 @@ float Particle::ProbByLaser(float laserArray[]) {
 }
 
 int Particle::checkIfLaserDetectRight(float laserScanValue, int laserRead) {
-	/*float max_angle_of_read = 240 / 0.36; //666.66667
-	 float half_max_angle_of_read = max_angle_of_read / 2;
-
-	 //(half_max_angle_of_read) - (half_max_angle_of_read - laserRead)	//angle = 0.36 * (2 * half_max_angle_of_read + laserRead) - 120;
-	 */
-
 	// clac the angle of laser from robot nose
-	float angle;
-	angle = floor(0.36 * laserRead - 120);
-
-	/* Old, maybe works..
-	 // Laser degree as an offset, plus or minus depends on the laser scan start direction
-	 //float spottedPointYaw = M_PI - DEGREE_TO_RADIAN(_position.getYaw() + laserRead);
-	 */
+	 float angle = floor(0.36 * laserRead - 120);
 
 	// calc the robot yaw if we want to look to the current laserRead
 	float spottedPointYaw = _position.getYaw() + (angle * M_PI / 180);
@@ -207,12 +195,6 @@ int Particle::checkIfLaserDetectRight(float laserScanValue, int laserRead) {
 								- distanceFromSpottedPointInCM) > 25) {
 					return 0;
 				}
-				/*// check if the spotted point is FREE and we are NEAR from laserScanValueInCM
-				 else if (spottedPointValue == FREE
-				 && abs(laserScanValueInCM - distanceFromSpottedPointInCM)
-				 < PARTICLE_LASER_NOISE_IN_CM) {
-
-				 }*/
 			}
 		}
 		//end of for

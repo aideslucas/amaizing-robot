@@ -133,12 +133,6 @@ bool WaypointManager::isInWaypoint(double x,double y, double yaw)
 	double dy = nextWaypoint.point.row - y;
 	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
-	cout << "Next way point x: "<< nextWaypoint.point.col << " ---> current x: " << x << endl;
-	cout << "Next way point y: "<< nextWaypoint.point.row << " ---> current y: " << y << endl;
-	cout << "Next way point yaw: " << nextWaypoint.yaw << " ---> current yaw: " << yaw <<  endl;
-	cout << "Distance to next way point: " << (distance) << endl;
-	cout << endl;
-
 	// Checking if the robot hit the way point, considering tolerance
 	if (distance <= 0.5)
 	{
@@ -153,12 +147,6 @@ bool WaypointManager::isNearWaypoint(double x,double y, double yaw)
 	double dx = nextWaypoint.point.col - x;
 	double dy = nextWaypoint.point.row - y;
 	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
-
-	cout << "Next way point x: "<< nextWaypoint.point.col << " ---> current x: " << x << endl;
-	cout << "Next way point y: "<< nextWaypoint.point.row << " ---> current y: " << y << endl;
-	cout << "Next way point yaw: " << nextWaypoint.yaw << " ---> current yaw: " << yaw <<  endl;
-	cout << "Distance to next way point: " << (distance) << endl;
-	cout << endl;
 
 	// Checking if the robot hit the way point, considering tolerance
 	if (distance <= 1.5)

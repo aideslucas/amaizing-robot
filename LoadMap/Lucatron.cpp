@@ -20,7 +20,7 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 	_wpMgr 		  = wpMgr;
 	_map 		  = map;
 	_localizationManager = localizationManager;
-
+_printCount = 0;
 	// Start motor
 	_posProxy -> SetMotorEnable(true);
 
@@ -35,9 +35,11 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 // Read the robot data
 void Lucatron::Read()
 {
-	double lastX = _Xpos;
-	double lastY = _Ypos;
-	double lastYaw = _Yaw;
+	_printCount++;
+
+	_lastX = _Xpos;
+	_lastY = _Ypos;
+	_lastYaw = _Yaw;
 
 	// Read
 	_playerClinet->Read();
@@ -46,14 +48,49 @@ void Lucatron::Read()
 	_Ypos = getYpos();
 	_Yaw = getYaw();
 
-	double deltaRow = this->_Xpos - lastY;
-	double deltaCol = this->_Ypos - lastX;
-	double deltaYaw = this->_Yaw - lastYaw;
+	if (_printCount == 20){
+		cout << "Lucatron's Position (X,Y,Yaw): (" << _Xpos << "," << _Ypos << "," << _Yaw << ")" << endl;
+		_printCount = 0;
 
-	Position delta(deltaRow, deltaCol, deltaYaw);
-	//_localizationManager->updateParticles(&delta, getLaserScan());
+		// paint on image
+		int resolutionRelation = _configMgr->gridResolutionCM / _map->getMapResolution();
+		int height = _configMgr->robotHeight;
+		int width = _configMgr->robotWidth;
 
-	cout << "X: " << _Xpos << " Y: " << _Ypos << " Yaw: " << _Yaw << endl;
+		for (int i = (_Xpos * resolutionRelation) - ((width/ resolutionRelation) / 2); i <= (_Xpos * resolutionRelation) + ((width/ resolutionRelation) / 2); i++)
+		{
+			for (int j = (_Ypos * resolutionRelation) - ((height / resolutionRelation) / 2); j <= (_Ypos * resolutionRelation) + ((height / resolutionRelation)/ 2); j++)
+			{
+				if (i >=0 && i < _map->getWidth() && j >= 0 && j < _map->getHeight())
+				{
+					Point robot;
+					robot.x = i;
+					robot.y = j;
+
+					_map->paintCell(robot,0,0,255);
+				}
+			}
+		}
+
+		_map->saveMap("robotsPosition.png");
+
+		for (int i = (_Xpos * resolutionRelation) - ((width/ resolutionRelation) / 2); i <= (_Xpos * resolutionRelation) + ((width/ resolutionRelation) / 2); i++)
+				{
+					for (int j = (_Ypos * resolutionRelation) - ((height / resolutionRelation) / 2); j <= (_Ypos * resolutionRelation) + ((height / resolutionRelation)/ 2); j++)
+					{
+				if (i >=0 && i < _map->getWidth() && j >= 0 && j < _map->getHeight())
+				{
+					Point robot;
+					robot.x = i;
+					robot.y = j;
+
+					_map->paintCell(robot,255,255,255);
+				}
+			}
+		}
+
+	}
+
 }
 
 float* Lucatron::getLaserScan()
@@ -77,13 +114,11 @@ void Lucatron::setSpeed(float xSpeed, float angularSpeed)
 double Lucatron::getXpos()
 {
 	return ((_posProxy->GetXPos()) * _configMgr->gridResolutionCM);
-	//return _localizationManager->getHighestBeliefParticle().getPosition().getCol();
 }
 
 double Lucatron::getYpos()
 {
 	return (((_gridRows / _configMgr->gridResolutionCM) - _posProxy->GetYPos()) * _configMgr->gridResolutionCM);
-	//return _localizationManager->getHighestBeliefParticle().getPosition().getRow();
 }
 
 double Lucatron::getYaw()
@@ -99,7 +134,6 @@ double Lucatron::getYaw()
 	{
 		return (360+yaw);
 	}
-	//return _localizationManager->getHighestBeliefParticle().getPosition().getYaw();
 }
 
 void Lucatron::setYaw(double Yaw)
@@ -135,7 +169,6 @@ void Lucatron::setYaw(double Yaw)
 		Read();
 		diff = _Yaw - Yaw;
 	}
-
 
 	setSpeed(0,0);
 }

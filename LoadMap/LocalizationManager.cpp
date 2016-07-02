@@ -7,7 +7,8 @@
 
 #include "LocalizationManager.h"
 
-LocalizationManager::LocalizationManager(Position * startPosition, Map * map) {
+LocalizationManager::LocalizationManager(Position* startPosition, Map* map)
+{
 	_map = map;
 	srand(time(NULL));
 
@@ -18,19 +19,20 @@ LocalizationManager::LocalizationManager(Position * startPosition, Map * map) {
 	Particle startParticle = Particle(startPosition->getRow(),
 			startPosition->getCol(), startPosition->getYaw(), (float) (1),
 			this->_map);
-	//this->createParticlesFromParticle(startParticle, true);
+	this->createParticlesFromParticle(startParticle, true);
 	//_particles.insert(_particles.end(), childParticles.begin(), childParticles.end());
 }
 
 void LocalizationManager::createParticlesFromParticle(Particle fromParticle,
-		bool isVectorEmpty) {
+		bool isVectorEmpty)
+{
 
 	if (isVectorEmpty == true) {
 		// add start position
 		this->_particles.push_back(fromParticle);
 	}
 
-	int particalesToCreate = 200 - this->_particles.size();
+	int particalesToCreate = 100 - this->_particles.size();
 	// create particles from best particle, the amount will be (MAX_PARTICLE - amount we have)
 	for (int index = 0; index < particalesToCreate; index++) {
 		_particles.push_back(fromParticle.createParticle());
