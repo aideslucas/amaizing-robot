@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map, LocalizationManager* localizationManager)
+Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map)
 {
 	// Initialize robot's data members
 	_playerClinet = new PlayerClient(IP, PortNum);
@@ -19,27 +19,27 @@ Lucatron::Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int grid
 	_gridRows	  = gridRows;
 	_wpMgr 		  = wpMgr;
 	_map 		  = map;
-	_localizationManager = localizationManager;
-_printCount = 0;
+	_printCount   = 0;
+
 	// Start motor
 	_posProxy -> SetMotorEnable(true);
 
 	// Setting the location data
 	_posProxy->SetOdometry(((double)Config->robotStart.x / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
 						   ((_gridRows / _configMgr->gridResolutionCM) - (((double)Config->robotStart.y) / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/
-					  	    (_configMgr->gridResolutionCM))) ,Config->robotStartYAW*M_PI/180);
+							(_configMgr->gridResolutionCM))) ,Config->robotStartYAW*M_PI/180);
+	_posProxy->SetOdometry(((double)Config->robotStart.x / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/ (_configMgr->gridResolutionCM)),
+						   ((_gridRows / _configMgr->gridResolutionCM) - (((double)Config->robotStart.y) / (_configMgr->gridResolutionCM / _configMgr->mapResolutionCM)/
+							(_configMgr->gridResolutionCM))),Config->robotStartYAW*M_PI/180);
 
-	this->Read();
+	for (int i = 0; i < 20; i++)
+		this->Read();
 }
 
 // Read the robot data
 void Lucatron::Read()
 {
 	_printCount++;
-
-	_lastX = _Xpos;
-	_lastY = _Ypos;
-	_lastYaw = _Yaw;
 
 	// Read
 	_playerClinet->Read();
@@ -93,18 +93,6 @@ void Lucatron::Read()
 
 }
 
-float* Lucatron::getLaserScan()
-{
-	float* scan = new float[_laserProxy->GetCount()];
-
-	for (unsigned int i = 0; i < _laserProxy->GetCount(); i++)
-	{
-		scan[i] = (*_laserProxy)[i];
-	}
-
-	return scan;
-}
-
 // Set the moving speed
 void Lucatron::setSpeed(float xSpeed, float angularSpeed)
 {
@@ -139,11 +127,11 @@ double Lucatron::getYaw()
 void Lucatron::setYaw(double Yaw)
 {
 	double diff = _Yaw - Yaw;
-	double turnSpeed = -0.12;
+	double turnSpeed = -0.1;
 
 	if (diff < 0 || diff > 180)
 	{
-		turnSpeed = 0.12;
+		turnSpeed = 0.1;
 	}
 
 	setSpeed(0,turnSpeed);
@@ -152,36 +140,64 @@ void Lucatron::setYaw(double Yaw)
 	{
 		Read();
 		diff = _Yaw - Yaw;
+		turnSpeed = -0.1;
+
+		if (diff < 0 || diff > 180)
+		{
+			turnSpeed = 0.1;
+		}
+
+		setSpeed(0,turnSpeed);
 	}
 
 	setSpeed(0,turnSpeed / 2);
 
-	while (abs(diff) > 0.5)
+	while (abs(diff) > 0.1)
 	{
 		Read();
 		diff = _Yaw - Yaw;
+		turnSpeed = -0.1;
+
+		if (diff < 0 || diff > 180)
+		{
+			turnSpeed = 0.1;
+		}
+
+		setSpeed(0,turnSpeed / 2);
 	}
 
 	setSpeed(0,turnSpeed / 4);
 
-	while (abs(diff) > 0.3)
+	while (abs(diff) > 0.25)
 	{
 		Read();
 		diff = _Yaw - Yaw;
+
+		turnSpeed = -0.1;
+		if (diff < 0 || diff > 180)
+		{
+			turnSpeed = 0.1;
+		}
+
+		setSpeed(0,turnSpeed / 4);
 	}
 
 	setSpeed(0,0);
 }
 
-void Lucatron::goToWaypoint()
+void Lucatron::goToWaypoint(double yaw)
 {
-	double speed = 0.12;
+	double speed = 0.1;
+	double diff;
 
 	setSpeed(speed,0);
 
 	while (!_wpMgr->isNearWaypoint(getXpos(), getYpos(), getYaw()))
 	{
 		Read();
+		diff = _Yaw - yaw;
+		if (abs(diff) > 1.5) { this->setYaw(yaw); }
+		setSpeed(speed,0);
 	}
 
 	setSpeed(speed / 2, 0);
@@ -189,6 +205,9 @@ void Lucatron::goToWaypoint()
 	while (!_wpMgr->isInWaypoint(getXpos(), getYpos(), getYaw()))
 	{
 		Read();
+		diff = _Yaw - yaw;
+		if (abs(diff) > 1.5) { this->setYaw(yaw); }
+		setSpeed(speed / 2, 0);
 	}
 
 	setSpeed(0,0);

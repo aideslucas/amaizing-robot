@@ -17,7 +17,6 @@
 #include "Cell.h"
 #include "WaypointManager.h"
 #include "Lucatron.h"
-#include "LocalizationManager.h"
 
 using namespace std;
 
@@ -44,17 +43,10 @@ int main()
 	vector<Cell> path = algo.StartAlgorithm();
 	graph.paintPathOnMap(&map, path,255,0,0);
 
-	// Save the new inflated map the a new file
-	map.saveMap("infloatedMap.png");
-
 	// Create a waypoint instance
 	WaypointManager wpMgr(algo.StartAlgorithm(), configMgr.gridResolutionCM, configMgr.mapResolutionCM);
 
-	Position startPosition(configMgr.robotStart.x, configMgr.robotStart.y, configMgr.robotStartYAW);
-
-	LocalizationManager* localizationManager = new LocalizationManager(&startPosition, &map);
-
-	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map, localizationManager);
+	Lucatron lucatron("10.10.245.63", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map);
 
 	Waypoint wayPoint;
 
@@ -64,7 +56,7 @@ int main()
 	{
 		wayPoint = wpMgr.waypoints[i];
 		wpMgr.setNextWaypoint(wayPoint);
-		lucatron.goToWaypoint();
+		lucatron.goToWaypoint(wpMgr.waypoints[i-1].yaw);
 
 		if (i < wpMgr.waypoints.size() -1)
 			lucatron.setYaw(wayPoint.yaw);

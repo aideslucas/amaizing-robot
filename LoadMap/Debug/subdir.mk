@@ -8,12 +8,9 @@ CPP_SRCS += \
 ../Cell.cpp \
 ../ConfigurationManager.cpp \
 ../Graph.cpp \
-../LocalizationManager.cpp \
 ../Lucatron.cpp \
 ../Main.cpp \
 ../Map.cpp \
-../Particle.cpp \
-../Position.cpp \
 ../Waypoint.cpp \
 ../WaypointManager.cpp \
 ../lodepng.cpp 
@@ -23,12 +20,9 @@ OBJS += \
 ./Cell.o \
 ./ConfigurationManager.o \
 ./Graph.o \
-./LocalizationManager.o \
 ./Lucatron.o \
 ./Main.o \
 ./Map.o \
-./Particle.o \
-./Position.o \
 ./Waypoint.o \
 ./WaypointManager.o \
 ./lodepng.o 
@@ -38,12 +32,9 @@ CPP_DEPS += \
 ./Cell.d \
 ./ConfigurationManager.d \
 ./Graph.d \
-./LocalizationManager.d \
 ./Lucatron.d \
 ./Main.d \
 ./Map.d \
-./Particle.d \
-./Position.d \
 ./Waypoint.d \
 ./WaypointManager.d \
 ./lodepng.d 

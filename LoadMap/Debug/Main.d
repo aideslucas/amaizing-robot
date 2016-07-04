@@ -12,8 +12,7 @@ Main.d: ../Main.cpp ../Map.h ../Graph.h ../Cell.h ../AStarAlgorithm.h \
  /usr/local/include/player-2.0/libplayerc++/playerc++config.h \
  /usr/local/include/player-2.0/libplayerc++/playerclient.h \
  /usr/local/include/player-2.0/libplayerc++/playererror.h \
- /usr/local/include/player-2.0/libplayerc++/clientproxy.h \
- ../LocalizationManager.h ../Particle.h ../Position.h
+ /usr/local/include/player-2.0/libplayerc++/clientproxy.h
 
 ../Map.h:
 
@@ -56,9 +55,3 @@ Main.d: ../Main.cpp ../Map.h ../Graph.h ../Cell.h ../AStarAlgorithm.h \
 /usr/local/include/player-2.0/libplayerc++/playererror.h:
 
 /usr/local/include/player-2.0/libplayerc++/clientproxy.h:
-
-../LocalizationManager.h:
-
-../Particle.h:
-
-../Position.h:

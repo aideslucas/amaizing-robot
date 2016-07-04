@@ -77,7 +77,7 @@ void Map::inflateObstacles()
 	int robotSizeInPixels = max(robotHeightInPixels, robotWidthInPixels);
 
 	// Initialize the radius to inflate
-	int inflationRadius = 0.7 * robotSizeInPixels;
+	int inflationRadius = 1.2 * robotSizeInPixels;
 
 	// Resizing inflated map
 	inflotedMap.resize(height);

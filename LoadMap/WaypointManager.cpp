@@ -100,22 +100,15 @@ WaypointManager::WaypointManager(vector<Cell> path, double gridResolution, doubl
 }
 
 // Creating way point every "num_of_cells" item on the path
-void WaypointManager::buildWaypointVector(int numberOfCells)
-{
-	Waypoint waypoint;
-	int oldyaw = -999;
+//void WaypointManager::buildWaypointVector(int numberOfCells)
+//{
+//	Waypoint waypoint;
+//	int oldyaw = -999;
 
-	for (int i = 0; i < astarPath.size(); i++)
-	{
-		}
-}
-double WaypointManager::calculateYaw(double m, Cell from, Cell to)
-{
-}
-
-double WaypointManager::calculateIncline(Cell from, Cell to)
-{
-}
+//	for (int i = 0; i < astarPath.size(); i++)
+//	{
+//		}
+//}
 
 void WaypointManager::setNextWaypoint(Waypoint next)
 {
@@ -134,7 +127,7 @@ bool WaypointManager::isInWaypoint(double x,double y, double yaw)
 	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	// Checking if the robot hit the way point, considering tolerance
-	if (distance <= 0.5)
+	if (distance <= 0.8)
 	{
 		return true;
 	}

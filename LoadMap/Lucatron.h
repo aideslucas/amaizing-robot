@@ -13,7 +13,6 @@
 #include "ConfigurationManager.h"
 #include "WaypointManager.h"
 #include "Map.h"
-#include "LocalizationManager.h"
 
 using namespace PlayerCc;
 
@@ -25,20 +24,17 @@ class Lucatron {
 	ConfigurationManager* _configMgr;
 	WaypointManager* _wpMgr;
 	Map* _map;
-	LocalizationManager* _localizationManager;
-int _printCount ;
+	int _printCount ;
+
 	public:
 	//Robot constructor & destructor
-	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map, LocalizationManager* localizationManager);
+	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map);
 	virtual ~Lucatron();
 
 	// Robot position
 	double _Xpos;
 	double _Ypos;
 	double _Yaw;
-	double _lastX;
-	double _lastY;
-	double _lastYaw;
 	int    _gridRows;
 
 	// Get the robot position
@@ -52,10 +48,8 @@ int _printCount ;
 	void setYaw(double  Yaw);
 
 	void setSpeed(float xSpeed, float angularSpeed);
-	void goToWaypoint();
+	void goToWaypoint(double yaw);
 	void Read();
-
-	float* getLaserScan();
 };
 
 #endif /* LUCATRON_H_ */
