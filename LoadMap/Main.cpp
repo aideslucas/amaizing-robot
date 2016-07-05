@@ -46,7 +46,11 @@ int main()
 	// Create a waypoint instance
 	WaypointManager wpMgr(algo.StartAlgorithm(), configMgr.gridResolutionCM, configMgr.mapResolutionCM);
 
-	Lucatron lucatron("10.10.245.63", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map);
+	Position startPosition(configMgr.robotStart.x, configMgr.robotStart.y, configMgr.robotStartYAW);
+	LocalizationManager* localizationManager = new LocalizationManager(&startPosition, &map);
+	Lucatron lucatron("localhost", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map, localizationManager);
+
+	//Lucatron lucatron("10.10.245.63", 6665, &configMgr, graph.nodes.size(), &wpMgr, &map);
 
 	Waypoint wayPoint;
 

@@ -13,6 +13,7 @@
 #include "ConfigurationManager.h"
 #include "WaypointManager.h"
 #include "Map.h"
+#include "LocalizationManager.h"
 
 using namespace PlayerCc;
 
@@ -25,10 +26,11 @@ class Lucatron {
 	WaypointManager* _wpMgr;
 	Map* _map;
 	int _printCount ;
+	LocalizationManager* _localizationManager;
 
 	public:
 	//Robot constructor & destructor
-	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map);
+	Lucatron(char* IP, int PortNum, ConfigurationManager* Config, int gridRows, WaypointManager* wpMgr, Map* map, LocalizationManager* localizationMgr);
 	virtual ~Lucatron();
 
 	// Robot position
