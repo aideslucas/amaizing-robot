@@ -31,4 +31,4 @@ jobs:
         uses: argonsecurity/scanner-action@v1.0
         with:
           # Token provided by argon. This is sensitive, add this as a secret
-          argon-token: ""
+          argon-token: "asdasd"
